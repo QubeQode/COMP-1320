@@ -1,11 +1,16 @@
 /* eslint-disable no-restricted-syntax */
 /*
  * Name: Lab 2 - Find Day in Gregorian Calendar Algorithm
- * Date: 2022 - 09 - xx
+ * Date: 2022 - 09 - 21
  * Description: Core function and helper functions that follow a mathematical algorithm to
  *              determine the day of the week for any given day. As well as a function to print
  *              all dates in a year.
  */
+
+// Destructuring to remove repitition between variable name and dot notation
+const { yearOffset } = require('./data');
+const { monthRef } = require('./data');
+const { weekdayRef } = require('./data');
 
 const getYearValue = (year) => {
   const lastDigits = year % 100;
@@ -34,14 +39,14 @@ const isLeapYear = (year) => {
 const calcYearOffset = (year) => {
   const firstDigits = Math.floor(year / 100);
   // Conditional logic was mirroring the key : value structure of an object.
-  return funcDatabase.yearOffset[firstDigits];
+  return yearOffset[firstDigits];
 };
 
 const getMonthValue = (month, year) => {
   const inputMonth = month;
   const monthLowercase = inputMonth.toLowerCase();
   const monthAbbrv = monthLowercase.slice(0, 3);
-  const monthValue = funcDatabase.monthRef[monthAbbrv].monthOffset + calcYearOffset(year);
+  const monthValue = monthRef[monthAbbrv].monthOffset + calcYearOffset(year);
   // Ternary: (condition) ? true : false;
   return isLeapYear(year) && ((monthAbbrv === 'jan') || (monthAbbrv === 'feb')) ? monthValue - 1
     : monthValue;
@@ -56,7 +61,7 @@ const getDayOfTheWeek = (year, month, day) => {
   }
   const getDaysSinceOrigin = (getYearValue(year) + day + getMonthValue(month, year));
   const getDayOfWeekOffset = getDaysSinceOrigin % 7;
-  const weekday = funcDatabase.weekdayRef[getDayOfWeekOffset];
+  const weekday = weekdayRef[getDayOfWeekOffset];
   return weekday;
 };
 
@@ -71,8 +76,8 @@ const getDayOfTheWeek = (year, month, day) => {
  * 2. maxVal #of days
  * - 2 for loops to iterate through months an days specifically
  * 1. const monthList = Object.keys(monthRef) --> for (month of monthList)
- *    const currentMonth = funcDatabase.monthRef[month].gregorianIndex
- *    const lastDay = funcDatabase.monthRef[month].lastDay
+ *    const currentMonth = monthRef[month].gregorianIndex
+ *    const lastDay = monthRef[month].lastDay
  * 2. for (let day = 1, day < lastDay + 1, day++)
  *    const currentDay = day
  *    const dayOfWeek = getDayOfTheWeek(year, month, day)
@@ -83,11 +88,10 @@ const getDayOfTheWeek = (year, month, day) => {
 
 const makeCalendar = () => {
   const year = 2022;
-  const monthList = Object.keys(funcDatabase.monthRef);
+  const monthList = Object.keys(monthRef);
   for (const month of monthList) {
-    const currentMonth = funcDatabase.monthRef[month].gregorianIndex;
-    // Destructuring to remove repitition between variable name and dot notation
-    const { lastDay } = funcDatabase.monthRef[month];
+    const currentMonth = monthRef[month].gregorianIndex;
+    const { lastDay } = monthRef[month];
     for (let day = 1; day <= lastDay; day++) {
       const dayOfWeek = getDayOfTheWeek(year, month, day);
       const printedMessage = `${currentMonth}-${day}-${year} is a ${dayOfWeek}.`;
