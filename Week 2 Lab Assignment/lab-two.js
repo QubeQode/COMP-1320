@@ -1,9 +1,9 @@
 /*
- * Name: Lab 2 - Find Day in Gregorian Calendar Algroithm
+ * Name: Lab 2 - Find Day in Gregorian Calendar Algorithm
  * Date: 2022 - 09 - xx
  * Description: Core function and helper functions that follow a mathematical algorithm to
- *              determine the day of the week for any given day. whilst also taking into account
- *              the edge cases surrounding leap and centennial years.
+ *              determine the day of the week for any given day. As well as a function to print
+ *              all dates in a year.
  */
 
 const funcDatabase = {
@@ -16,18 +16,67 @@ const funcDatabase = {
     21: 4,
   },
   monthRef: {
-    jan: 1,
-    feb: 4,
-    mar: 4,
-    apr: 0,
-    may: 2,
-    jun: 5,
-    jul: 0,
-    aug: 3,
-    sep: 6,
-    oct: 1,
-    nov: 4,
-    dec: 6,
+    jan: {
+      monthOffset: 1,
+      gregorianIndex: 1,
+      lastDay: 31,
+    },
+    feb: {
+      monthOffset: 4,
+      gregorianIndex: 2,
+      lastDay: 28,
+      leapDay: 29,
+    },
+    mar: {
+      monthOffset: 4,
+      gregorianIndex: 3,
+      lastDay: 31,
+    },
+    apr: {
+      monthOffset: 0,
+      gregorianIndex: 4,
+      lastDay: 30,
+    },
+    may: {
+      monthOffset: 2,
+      gregorianIndex: 5,
+      lastDay: 31,
+    },
+    jun: {
+      monthOffset: 5,
+      gregorianIndex: 6,
+      lastDay: 30,
+    },
+    jul: {
+      monthOffset: 0,
+      gregorianIndex: 7,
+      lastDay: 31,
+    },
+    aug: {
+      monthOffset: 3,
+      gregorianIndex: 8,
+      lastDay: 31,
+    },
+    sep: {
+      monthOffset: 6,
+      gregorianIndex: 9,
+      lastDay: 30,
+    },
+    oct: {
+      monthOffset: 1,
+      gregorianIndex: 10,
+      lastDay: 31,
+    },
+    nov: {
+      monthOffset: 4,
+      gregorianIndex: 11,
+      lastDay: 30,
+    },
+    dec: {
+      monthOffset: 6,
+      gregorianIndex: 12,
+      lastDay: 31,
+    },
   },
   // Used an array because the key:value mirrored an array index and this is easier on memory
   weekdayRef: [
@@ -61,7 +110,7 @@ const isLeapYear = (year) => {
   if (year % 100 !== 0) {
     return true;
   }
-  // Returned mod-op-result/0 as it will resolve in a true/false value itself
+  // Returned mod-result/0 as it will resolve in a true/false value itself
   return year % 400 === 0;
 };
 
@@ -75,9 +124,11 @@ const getMonthValue = (month, year) => {
   const inputMonth = month;
   const monthLowercase = inputMonth.toLowerCase();
   const monthAbbrv = monthLowercase.slice(0, 3);
-  const monthValue = funcDatabase.monthRef[monthAbbrv] + calcYearOffset(year);
+  console.log(funcDatabase.monthRef[monthAbbrv].monthOffset);
+  const monthValue = funcDatabase.monthRef[monthAbbrv].monthOffset + calcYearOffset(year);
   // Ternary: (condition) ? true : false;
-  return isLeapYear(year) && ((monthAbbrv === 'jan') || (monthAbbrv === 'feb')) ? monthValue - 1 : monthValue;
+  return isLeapYear(year) && ((monthAbbrv === 'jan') || (monthAbbrv === 'feb')) ? monthValue - 1
+    : monthValue;
 };
 
 const getDayOfTheWeek = (year, month, day) => {
@@ -93,30 +144,53 @@ const getDayOfTheWeek = (year, month, day) => {
   return weekday;
 };
 
+/*
+ * makeCalendar() function resulting in listing of all dates + days of week for 2022
+ * output = print "day-month-year is a [weekday]"
+ * - weekday can be found from the output of getDayOfTheWeek(year, month, day)
+ *      requires defined variables for year, month, day
+ * - year = 2022
+ * - important properties of month added to monthRef object:
+ * 1. gregorian numeric representation
+ * 2. maxVal #of days
+ * 3. leapYear #of days - Feb edgecase [if isLeapYear === true]
+ * - 2 for loops to iterate through months an days specifically
+ * 1. const months = Object.keys(monthRef) --> for (month of months)
+ *    const currentMonth = funcDatabase.monthRef[month].gregorianIndex
+ *    const lastDay = funcDatabase.monthRef[month].lastDay
+ * 2. for (let day = 1, day < lastDay + 1, day++)
+ *    const currentDay = day
+ *    const dayOfWeek = getDayOfTheWeek(year, month, day)
+ *    const printedMessage = `$currentDay-$currentMonth-$year is a $dayOfTheWeek.`
+ *    return printedMessage
+ */
+
+// module.exports = { getDayOfTheWeek, makeCalendar };
+
 // This is for testing purposes only:
 /*
  * Should return error message for year above function's use case
  * Expect Sorry, I can't see that far into the future.
  */
-console.log(getDayOfTheWeek(2300, 'feb', 22));
+// console.log(getDayOfTheWeek(2300, 'feb', 22));
 
 /*
  * Should return error message for year below function's use case
  * Expect Apologies, I seem to have forgotten.
  */
-console.log(getDayOfTheWeek(1599, 'feb', 22));
+// console.log(getDayOfTheWeek(1599, 'feb', 22));
 
 /*
  * Should return correct day for centennial leap year
  * Expect tuesday
  */
-console.log(getDayOfTheWeek(1600, 'feb', 22));
+// console.log(getDayOfTheWeek(1600, 'feb', 22));
 
 /*
  * Should return correct day for leap year
  * Expect thursday
  */
-console.log(getDayOfTheWeek(1996, 'feb', 22));
+// console.log(getDayOfTheWeek(1996, 'feb', 22));
 
 /*
  * Should return correct day for centennial year
@@ -128,4 +202,4 @@ console.log(getDayOfTheWeek(1631, 'feb', 22));
  * Should return correct day for year without any offset
  * Expect friday
  */
-console.log(getDayOfTheWeek(1935, 'feb', 22));
+// console.log(getDayOfTheWeek(1935, 'feb', 22));
