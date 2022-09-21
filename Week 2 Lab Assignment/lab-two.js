@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 /*
  * Name: Lab 2 - Find Day in Gregorian Calendar Algorithm
  * Date: 2022 - 09 - xx
@@ -25,7 +26,6 @@ const funcDatabase = {
       monthOffset: 4,
       gregorianIndex: 2,
       lastDay: 28,
-      leapDay: 29,
     },
     mar: {
       monthOffset: 4,
@@ -124,7 +124,6 @@ const getMonthValue = (month, year) => {
   const inputMonth = month;
   const monthLowercase = inputMonth.toLowerCase();
   const monthAbbrv = monthLowercase.slice(0, 3);
-  console.log(funcDatabase.monthRef[monthAbbrv].monthOffset);
   const monthValue = funcDatabase.monthRef[monthAbbrv].monthOffset + calcYearOffset(year);
   // Ternary: (condition) ? true : false;
   return isLeapYear(year) && ((monthAbbrv === 'jan') || (monthAbbrv === 'feb')) ? monthValue - 1
@@ -148,24 +147,39 @@ const getDayOfTheWeek = (year, month, day) => {
  * makeCalendar() function resulting in listing of all dates + days of week for 2022
  * output = print "day-month-year is a [weekday]"
  * - weekday can be found from the output of getDayOfTheWeek(year, month, day)
- *      requires defined variables for year, month, day
+ *    requires defined variables for year, month, day
  * - year = 2022
  * - important properties of month added to monthRef object:
  * 1. gregorian numeric representation
  * 2. maxVal #of days
- * 3. leapYear #of days - Feb edgecase [if isLeapYear === true]
  * - 2 for loops to iterate through months an days specifically
- * 1. const months = Object.keys(monthRef) --> for (month of months)
+ * 1. const monthList = Object.keys(monthRef) --> for (month of monthList)
  *    const currentMonth = funcDatabase.monthRef[month].gregorianIndex
  *    const lastDay = funcDatabase.monthRef[month].lastDay
  * 2. for (let day = 1, day < lastDay + 1, day++)
  *    const currentDay = day
  *    const dayOfWeek = getDayOfTheWeek(year, month, day)
- *    const printedMessage = `$currentDay-$currentMonth-$year is a $dayOfTheWeek.`
- *    return printedMessage
+ *    const printedMessage = `$currentDay-$currentMonth-$inputYear is a $dayOfTheWeek.`
+ * Because makeCalendar only has to handle 2022, there is no need for the edgecase of February in a
+ *  leap year.
  */
 
-// module.exports = { getDayOfTheWeek, makeCalendar };
+const makeCalendar = () => {
+  const year = 2022;
+  const monthList = Object.keys(funcDatabase.monthRef);
+  for (const month of monthList) {
+    const currentMonth = funcDatabase.monthRef[month].gregorianIndex;
+    // Destructuring to remove repitition between variable name and dot notation
+    const { lastDay } = funcDatabase.monthRef[month];
+    for (let day = 1; day <= lastDay; day++) {
+      const dayOfWeek = getDayOfTheWeek(year, month, day);
+      const printedMessage = `${day}-${currentMonth}-${year} is a ${dayOfWeek}.`;
+      console.log(printedMessage);
+    }
+  }
+};
+
+module.exports = { getDayOfTheWeek, makeCalendar };
 
 // This is for testing purposes only:
 /*
@@ -196,7 +210,7 @@ const getDayOfTheWeek = (year, month, day) => {
  * Should return correct day for centennial year
  * Expect saturday
  */
-console.log(getDayOfTheWeek(1631, 'feb', 22));
+// console.log(getDayOfTheWeek(1631, 'feb', 22));
 
 /*
  * Should return correct day for year without any offset
