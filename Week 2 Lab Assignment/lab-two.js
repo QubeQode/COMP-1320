@@ -173,7 +173,7 @@ const makeCalendar = () => {
     const { lastDay } = funcDatabase.monthRef[month];
     for (let day = 1; day <= lastDay; day++) {
       const dayOfWeek = getDayOfTheWeek(year, month, day);
-      const printedMessage = `${day}-${currentMonth}-${year} is a ${dayOfWeek}.`;
+      const printedMessage = `${currentMonth}-${day}-${year} is a ${dayOfWeek}.`;
       console.log(printedMessage);
     }
   }
@@ -184,36 +184,36 @@ module.exports = { getDayOfTheWeek, makeCalendar };
 // This is for testing purposes only:
 /*
  * Should return error message for year above function's use case
- * Expect Sorry, I can't see that far into the future.
+ * Expect: Sorry, I can't see that far into the future.
  */
 // console.log(getDayOfTheWeek(2300, 'feb', 22));
 
 /*
  * Should return error message for year below function's use case
- * Expect Apologies, I seem to have forgotten.
+ * Expect: Apologies, I seem to have forgotten.
  */
 // console.log(getDayOfTheWeek(1599, 'feb', 22));
 
 /*
  * Should return correct day for centennial leap year
- * Expect tuesday
+ * Expect: tuesday
  */
-//console.log(getDayOfTheWeek(1600, 'feb', 22));
+// console.log(getDayOfTheWeek(1600, 'feb', 22));
 
 /*
  * Should return correct day for leap year
- * Expect thursday
+ * Expect: saturday
  */
 // console.log(getDayOfTheWeek(1992, 'feb', 22));
 
 /*
  * Should return correct day for centennial year
- * Expect saturday
+ * Expect: saturday
  */
 // console.log(getDayOfTheWeek(1631, 'feb', 22));
 
 /*
  * Should return correct day for year without any offset
- * Expect friday
+ * Expect: friday
  */
 // console.log(getDayOfTheWeek(1935, 'feb', 22));
