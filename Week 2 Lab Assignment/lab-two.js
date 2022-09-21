@@ -82,10 +82,10 @@ const getMonthValue = (month, year) => {
 
 const getDayOfTheWeek = (year, month, day) => {
     if (year > 2199) {
-        console.log("I can't see that far into the future.");
+        return "Sorry, I can't see that far into the future.";
     }
     if (year < 1600) {
-        console.log("I forgot.")
+        return "Apologies, I seem to have forgotten.";
     }
     const getDaysSinceOrigin = (getYearValue(year) + day + getMonthValue(month, year));
     const getDayOfWeekOffset = getDaysSinceOrigin % 7;
@@ -95,10 +95,16 @@ const getDayOfTheWeek = (year, month, day) => {
 
 // This is for testing purposes only:
 /*
- * Should return undefined for year outside function's use case
- * Expect undefined
+ * Should return error message for year above function's use case
+ * Expect Sorry, I can't see that far into the future.
  */
 console.log(getDayOfTheWeek(2300, "feb", 22));
+
+/*
+ * Should return error message for year below function's use case
+ * Expect Apologies, I seem to have forgotten.
+ */
+console.log(getDayOfTheWeek(1599, "feb", 22));
 
 /*
  * Should return correct day for centennial leap year
