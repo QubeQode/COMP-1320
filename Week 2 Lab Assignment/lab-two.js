@@ -198,13 +198,13 @@ module.exports = { getDayOfTheWeek, makeCalendar };
  * Should return correct day for centennial leap year
  * Expect tuesday
  */
-// console.log(getDayOfTheWeek(1600, 'feb', 22));
+//console.log(getDayOfTheWeek(1600, 'feb', 22));
 
 /*
  * Should return correct day for leap year
  * Expect thursday
  */
-// console.log(getDayOfTheWeek(1996, 'feb', 22));
+// console.log(getDayOfTheWeek(1992, 'feb', 22));
 
 /*
  * Should return correct day for centennial year
