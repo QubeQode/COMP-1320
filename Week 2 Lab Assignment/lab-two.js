@@ -81,6 +81,12 @@ const getMonthValue = (month, year) => {
 };
 
 const getDayOfTheWeek = (year, month, day) => {
+    if (year > 2199) {
+        console.log("I can't see that far into the future.");
+    }
+    if (year < 1600) {
+        console.log("I forgot.")
+    }
     const getDaysSinceOrigin = (getYearValue(year) + day + getMonthValue(month, year));
     const getDayOfWeekOffset = getDaysSinceOrigin % 7;
     const weekday = funcDatabase.weekdayRef[getDayOfWeekOffset];
@@ -117,4 +123,3 @@ console.log(getDayOfTheWeek(1631, "feb", 22));
  * Expect friday
  */
 console.log(getDayOfTheWeek(1935, "feb", 22));
-
