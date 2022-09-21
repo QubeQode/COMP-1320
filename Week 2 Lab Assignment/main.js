@@ -16,8 +16,8 @@ const getDayOfTheWeekForUserDate = (year, month, day) => {
     console.log(foundDay);
 };
 
-const year = readline.question('Please provide a year: ');
+const year = readline.questionInt('Please provide a year: ');
 const month = readline.question('Please provide a month: ');
-const day = readline.question('Please provide a date: ');
+const day = readline.questionInt('Please provide a date: ');
 
 getDayOfTheWeekForUserDate(year, month, day);
