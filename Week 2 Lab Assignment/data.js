@@ -6,6 +6,7 @@ const  yearOffset = {
       20: 6,
       21: 4,
 };
+
 const monthRef = {
     jan: {
         monthOffset: 1,
@@ -68,6 +69,7 @@ const monthRef = {
         lastDay: 31,
     },
 };
+
 // Used an array because the key:value mirrored an array index and this is easier on memory
 const weekdayRef = [
     'saturday',
