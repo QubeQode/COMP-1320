@@ -54,10 +54,10 @@ const getMonthValue = (month, year) => {
 
 const getDayOfTheWeek = (year, month, day) => {
   if (year > 2199) {
-    return "Sorry, I can't see that far into the future.";
+    return "Sorry, I can't see that far into the future";
   }
   if (year < 1600) {
-    return 'Apologies, I seem to have forgotten.';
+    return 'Apologies, I seem to have forgotten';
   }
   const getDaysSinceOrigin = (getYearValue(year) + day + getMonthValue(month, year));
   const getDayOfWeekOffset = getDaysSinceOrigin % 7;
