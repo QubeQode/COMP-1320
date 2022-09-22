@@ -94,6 +94,7 @@ const makeCalendar = () => {
     for (let day = 1; day <= lastDay; day++) {
       const dayOfWeek = getDayOfTheWeek(year, month, day);
       const printedMessage = `${currentMonth}-${day}-${year} is a ${dayOfWeek}.`;
+      // eslint-disable-next-line no-console
       console.log(printedMessage);
     }
   }
