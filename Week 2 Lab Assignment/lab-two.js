@@ -47,7 +47,7 @@ const getMonthValue = (month, year) => {
   const monthLowercase = inputMonth.toLowerCase();
   const monthAbbrv = monthLowercase.slice(0, 3);
   const monthValue = monthRef[monthAbbrv].monthOffset + calcYearOffset(year);
-  // Ternary: (condition) ? true : false;
+  // Ternary = (condition) ? true : false;
   return isLeapYear(year) && ((monthAbbrv === 'jan') || (monthAbbrv === 'feb')) ? monthValue - 1
     : monthValue;
 };
@@ -74,12 +74,11 @@ const getDayOfTheWeek = (year, month, day) => {
  * - important properties of month added to monthRef object:
  * 1. gregorian numeric representation
  * 2. maxVal #of days
- * - 2 for loops to iterate through months an days specifically
+ * - 2 for loops to iterate through months and days specifically
  * 1. const monthList = Object.keys(monthRef) --> for (month of monthList)
  *    const currentMonth = monthRef[month].gregorianIndex
  *    const lastDay = monthRef[month].lastDay
- * 2. for (let day = 1, day < lastDay + 1, day++)
- *    const currentDay = day
+ * 2. for (let day = 1, day <= lastDay, day++)
  *    const dayOfWeek = getDayOfTheWeek(year, month, day)
  *    const printedMessage = `$currentDay-$currentMonth-$inputYear is a $dayOfTheWeek.`
  * Because makeCalendar only has to handle 2022, there is no need for the edgecase of February in a
