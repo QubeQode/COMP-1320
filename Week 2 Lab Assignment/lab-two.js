@@ -47,17 +47,17 @@ const getMonthValue = (month, year) => {
   const monthLowercase = inputMonth.toLowerCase();
   const monthAbbrv = monthLowercase.slice(0, 3);
   const monthValue = monthRef[monthAbbrv].monthOffset + calcYearOffset(year);
-  // Ternary: (condition) ? true : false;
+  // Ternary = (condition) ? true : false;
   return isLeapYear(year) && ((monthAbbrv === 'jan') || (monthAbbrv === 'feb')) ? monthValue - 1
     : monthValue;
 };
 
 const getDayOfTheWeek = (year, month, day) => {
   if (year > 2199) {
-    return "Sorry, I can't see that far into the future.";
+    return "Sorry, I can't see that far into the future";
   }
   if (year < 1600) {
-    return 'Apologies, I seem to have forgotten.';
+    return 'Apologies, I seem to have forgotten';
   }
   const getDaysSinceOrigin = (getYearValue(year) + day + getMonthValue(month, year));
   const getDayOfWeekOffset = getDaysSinceOrigin % 7;
@@ -74,12 +74,11 @@ const getDayOfTheWeek = (year, month, day) => {
  * - important properties of month added to monthRef object:
  * 1. gregorian numeric representation
  * 2. maxVal #of days
- * - 2 for loops to iterate through months an days specifically
+ * - 2 for loops to iterate through months and days specifically
  * 1. const monthList = Object.keys(monthRef) --> for (month of monthList)
  *    const currentMonth = monthRef[month].gregorianIndex
  *    const lastDay = monthRef[month].lastDay
- * 2. for (let day = 1, day < lastDay + 1, day++)
- *    const currentDay = day
+ * 2. for (let day = 1, day <= lastDay, day++)
  *    const dayOfWeek = getDayOfTheWeek(year, month, day)
  *    const printedMessage = `$currentDay-$currentMonth-$inputYear is a $dayOfTheWeek.`
  * Because makeCalendar only has to handle 2022, there is no need for the edgecase of February in a
@@ -95,6 +94,7 @@ const makeCalendar = () => {
     for (let day = 1; day <= lastDay; day++) {
       const dayOfWeek = getDayOfTheWeek(year, month, day);
       const printedMessage = `${currentMonth}-${day}-${year} is a ${dayOfWeek}.`;
+      // eslint-disable-next-line no-console
       console.log(printedMessage);
     }
   }
