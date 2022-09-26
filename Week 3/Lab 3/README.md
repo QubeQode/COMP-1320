@@ -1,4 +1,4 @@
-# Lab 3 - Callback Functions + Callback Queue:
+# Lab 3 - Callback Functions + Callback Queue
 
 ## Core Functionality
 
@@ -80,6 +80,8 @@ to produce output of distance
 
 # Terminal Interfacing + Logging Output
 
+## Initialization Codeblock
+
 - `module.exports = { findDistance };` - export composite mathematical function
 
 - `const process = require('process');` - import `process` module onto main file for `process.argv`
@@ -88,7 +90,31 @@ to produce output of distance
 
 - `const { findDistance } = require('./mathHelpers.js);` - import composite function into main file
 
+- `process.argv` must be declared to a variable `userInput`
+
 <br>
+
+## `processInput` function
+
+- `fs.existsSync(path)` checks if directory `dataPoints` already exists
+
+- If not `dataPoints` directory is created using `fs.makedir` [Async] 
+
+- `fs.writeFile` takes `userInput` and writes to file `points.txt` [Async]
+
+- `points.txt` saves to directory `dataPoints` (argument in `fs.writeFile`)
+
+- After function has succesfully completed print `Content saved` in terminal
+
+<br>
+
+## `retrieveInput` function
+
+x
+
+<br>
+
+# Peripheral Definitions:
 
 ## `process.argv`
 
@@ -177,6 +203,71 @@ Where
 - **data** = data that is to be appended
 
 - **options** = optional argument determining how the data is encoded (utf8 default)
+
+- **callback** = inherits argument `err` if asynchronous procedure is erronious and outputs error 
+message. Otherwise performs an intended background task with other inherited arguments.
+
+<br>
+
+## `fs.writeFile`
+
+Node API used to write specified data to a file *asynchronously*.
+
+Accepts the following parameters
+
+`fs.writeFile(path, data[, options], callback)`
+
+<br>
+
+Where
+
+- **path** = filepath for directory you wish to write to
+
+- **data** = data that is to be written in directory
+
+- **options** = optional argument for data encoding or directory settings
+
+- **callback** = inherits argument `err` if asynchronous procedure is erronious and outputs error 
+message. Otherwise performs an intended background task with other inherited arguments.
+
+<br>
+
+## `fs.existsSync`
+
+Node API used to *synchronously* detect whether a specific filepath and directory exists already or 
+not.
+
+**Note:** `fs.exists()` is depricated, but `fs.existsSync` is not.
+
+<br>
+
+Accepts the following parameters
+
+`fs.existsSync(path)`
+
+<br>
+
+Where
+
+- **path** = the name of the directory you wish to check exists
+
+<br>
+
+## `fs.readFile`
+
+Node API used to read a file *asynchronously*.
+
+Accepts the following parameters
+
+`fs.readFile(path, encoding, callback)`
+
+<br>
+
+Where
+
+- **path** = the name of the directory to be read or the path to said directory
+
+- **encoding** = format of the output (default: utf8)
 
 - **callback** = inherits argument `err` if asynchronous procedure is erronious and outputs error 
 message. Otherwise performs an intended background task with other inherited arguments.
