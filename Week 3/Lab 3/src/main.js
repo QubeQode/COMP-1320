@@ -44,8 +44,7 @@ let userInput = process.argv;
  */
 
 /*
- * Recursion Snippet:
- * name = folderName <- initial
+ * Recursion Snippet
  * name = 'Temp_' + name <- iteration
  */
 
@@ -58,6 +57,20 @@ let userInput = process.argv;
  * const y2 = userInput[3]
  * const outputMessage = `The distance between your two points: ($x1, $y1), ($x2, $y2) is
     $foundDistance`
- * fs.appendFile('folder_name/points.txt', outputMessage, callback?)
- * how do you structure the last callback in a callback nest?
+ * fs.appendFile('folder_name/points.txt', outputMessage, callback)
+ */
+
+/*
+ * Order of Dependencies
+ * fs.existsSync needed to see what prior folder exists
+ * fs.makedir() needed to make a folder for fs.writefile to write in
+ * fs.writefile needed to make a file for fs.appendFile to append to
+ */
+
+/*
+ * Have I understood the problem correctly?
+ * Is fs.existsSync the right solution here?
+ * How do you structure a callback nest?
+ * Recursion = working way to base case + shooting forwards
+    How do I format my base cases for the recursive formula?
  */
