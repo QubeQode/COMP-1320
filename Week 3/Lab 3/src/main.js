@@ -9,8 +9,8 @@ const { findDistance } = require('./mathHelpers');
    initial folder = dataPoints
     every iteration after
       folder = temp_+[prior iteration folder name]
-      console.log(`Folder "dataPoints" already exists. Creating a new folder for you called 
-      $foldername`)
+      console.log(`Folder "oldname" already exists. Creating a new folder for you called
+      newname`)
    file = points.txt
  * 3. Inputs the arguments from the array in points.txt and saves to relevant directory
  * 4. console.log('Content Saved')
@@ -26,7 +26,7 @@ const { findDistance } = require('./mathHelpers');
  */
 
 /*
- * Piece 1
+ * Piece 1: Obtaining arguments
  * userInput = process.argv
  * This will be the argument we pass through processInputs
  * Can be done synchronously
@@ -35,12 +35,22 @@ const { findDistance } = require('./mathHelpers');
 let userInput = process.argv;
 
 /*
- * Piece 2
- * ~needs some work~
+ * Piece 2: Storage
+ * ~needs some work with structuring~
+ * fs.existsSync to see if the folder already exists
+ * folder system through fs.makedir() applied recursively
+ * fs.writefile() to store arguments in 'points.txt'
+ * console.log('Content Saved')
  */
 
 /*
- * Piece 3
+ * Recursion Snippet:
+ * name = folderName <- initial
+ * name = 'Temp_' + name <- iteration
+ */
+
+/*
+ * Piece 3: Processing and logging output
  * const foundDistance = findDistance(userInput)
  * const x1 = userInput[0]
  * const x2 = userInput[2]
