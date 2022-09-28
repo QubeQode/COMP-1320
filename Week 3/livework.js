@@ -84,19 +84,17 @@
  * Practice Problem: setTimeout + callback functions
  */
 
-const multiplier = (num1, num2, callback) => {
-    setTimeout(() => {
-        if (typeof num1 != 'number' || typeof num2 != 'number') {
-            callback('You must pass numbers to this function!');
-        } else {
-            callback(null, parseInt(num1) * parseInt(num2));
-        }
-    }, 4000);
-};
+// const multiplier = (num1, num2, callback) => {
+//     setTimeout(() => {
+//         if (typeof num1 != 'number' || typeof num2 != 'number') {
+//             callback('You must pass numbers to this function!');
+//         } else {
+//             callback(null, parseInt(num1) * parseInt(num2));
+//         }
+//     }, 4000);
+// };
 
-multiplier(5, 5, (err, result) => (err) ? console.log(err) : console.log(result));
-
-// TALK TO ARMAAN ABOUT WHAT WENT WRONG HERE ^^^^^
+// multiplier(5, 5, (err, result) => (err) ? console.log(err) : console.log(result));
 
 // const fs = require("fs"); // built-in Node API - fs = filesystem API
 
