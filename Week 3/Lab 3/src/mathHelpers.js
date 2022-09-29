@@ -1,6 +1,6 @@
 const calcDiff = (xy2, xy1) => xy2 - xy1;
 
-const square = (numDiff) => 2 ** numDiff;
+const square = (numDiff) => numDiff * numDiff;
 
 const squareRoot = (squareDiff1, squareDiff2) => Math.sqrt(squareDiff1 + squareDiff2);
 
