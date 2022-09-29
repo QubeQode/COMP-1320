@@ -1,0 +1,1 @@
+Your input co-ordinates are (15, 23), (43, 21). The distance between your two points: (15, 23), (43, 21) is 16384.000007629395.

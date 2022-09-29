@@ -4,19 +4,19 @@
 
 - Program accepts arguments through the terminal
 
-    - `x1`
-    - `y1` 
-    - `x2`
-    - `y2`
+  - `x1`
+  - `y1`
+  - `x2`
+  - `y2`
 
 <br>
 
 - Creates a directory `dataPoints` asynchronously.
 
-- Takes the values input in the terminal and writes them to `points.txt` within the `dataPoints` 
+- Takes the values input in the terminal and writes them to `points.txt` within the `dataPoints`
 folder.
 
-- Uses the arguments to calculate the distance between two points and appends the variables and 
+- Uses the arguments to calculate the distance between two points and appends the variables and
 output to the bottom of the file.
 
 <br>
@@ -73,7 +73,7 @@ Use `fs.appendFile` to add `findDistance` output to end of file. Prints the foll
 
 3. `squareRoot` function -  `Math.sqrt(xDiffSqr + yDiffSqr)`
 
-4. `findDistance` function - introduces shared parameters and synchronously calls helper functions 
+4. `findDistance` function - introduces shared parameters and synchronously calls helper functions
 to produce output of distance
 
 <br>
@@ -98,7 +98,7 @@ to produce output of distance
 
 - `fs.existsSync(path)` checks if directory `dataPoints` already exists
 
-- If not `dataPoints` directory is created using `fs.makedir` [Async] 
+- If not `dataPoints` directory is created using `fs.makedir` [Async]
 
 - `fs.writeFile` takes `userInput` and writes to file `points.txt` [Async]
 
@@ -114,7 +114,7 @@ x
 
 <br>
 
-# Peripheral Definitions:
+# Peripheral Definitions
 
 ## `process.argv`
 
@@ -130,7 +130,7 @@ A *synchronous* process that returns an array of
 
 ## Understanding Callback Form in Node
 
-Callbacks are used to code asynchronously in Node. By calling the function at the completion of a 
+Callbacks are used to code asynchronously in Node. By calling the function at the completion of a
 given task, blocking is prevented.
 
 Callback functions allow the program to run other code till a specified task is completed.
@@ -145,12 +145,12 @@ Callback functions allow the program to run other code till a specified task is 
 
 `});`
 
-- `async.procedure` and associated parameters attempt to perform the task they are hardcoded to 
+- `async.procedure` and associated parameters attempt to perform the task they are hardcoded to
 perform.
 
 <br>
 
-- The `callback` is then assosciated with all its original parameters. Though it is given a new 
+- The `callback` is then assosciated with all its original parameters. Though it is given a new
 first parameter `err`.
 
 <br>
@@ -160,7 +160,7 @@ first parameter `err`.
 
 <br>
 
-- However if the `err` parameter returns false; and thereby the process is working as intended, the 
+- However if the `err` parameter returns false; and thereby the process is working as intended, the
 `callback` function will instead perform its intended output.
 
 <br>
@@ -181,7 +181,7 @@ Where
 
 - **options** = optional argument determining who can read, write or search a directory/file
 
-- **callback** = inherits argument `err` if asynchronous procedure is erronious and outputs error 
+- **callback** = inherits argument `err` if asynchronous procedure is erronious and outputs error
 message. Otherwise performs an intended background task with other inherited arguments.
 
 <br>
@@ -204,7 +204,7 @@ Where
 
 - **options** = optional argument determining how the data is encoded (utf8 default)
 
-- **callback** = inherits argument `err` if asynchronous procedure is erronious and outputs error 
+- **callback** = inherits argument `err` if asynchronous procedure is erronious and outputs error
 message. Otherwise performs an intended background task with other inherited arguments.
 
 <br>
@@ -227,14 +227,14 @@ Where
 
 - **options** = optional argument for data encoding or directory settings
 
-- **callback** = inherits argument `err` if asynchronous procedure is erronious and outputs error 
+- **callback** = inherits argument `err` if asynchronous procedure is erronious and outputs error
 message. Otherwise performs an intended background task with other inherited arguments.
 
 <br>
 
 ## `fs.existsSync`
 
-Node API used to *synchronously* detect whether a specific filepath and directory exists already or 
+Node API used to *synchronously* detect whether a specific filepath and directory exists already or
 not.
 
 **Note:** `fs.exists()` is depricated, but `fs.existsSync` is not.
@@ -269,5 +269,5 @@ Where
 
 - **encoding** = format of the output (default: utf8)
 
-- **callback** = inherits argument `err` if asynchronous procedure is erronious and outputs error 
+- **callback** = inherits argument `err` if asynchronous procedure is erronious and outputs error
 message. Otherwise performs an intended background task with other inherited arguments.

@@ -13,5 +13,6 @@ module.exports = {
   rules: {
     'linebreak-style': ['error', 'windows'],
     'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
+    
   },
 };

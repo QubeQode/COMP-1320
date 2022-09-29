@@ -2,10 +2,44 @@ const process = require('process');
 const fs = require('fs');
 const { findDistance } = require('./mathHelpers');
 
+let userInput = process.argv.slice(2);
+const dirName = 'dataPoints';
+
+const processInput = (userInput, dirName) => {
+   fs.mkdir(`../${dirName}`, (err) => {
+      if (err && err.code === 'EEXIST') {
+         processInput(userInput, `TEMP_${dirName}`);
+         
+      } else {
+         const x1 = parseInt(userInput[0]);
+         const y1 = parseInt(userInput[1]);
+         const x2 = parseInt(userInput[2]);
+         const y2 = parseInt(userInput[3]);
+         const initMessage = `Your input co-ordinates are (${x1}, ${y1}), (${x2}, ${y2}).`;
+         fs.writeFile(`../${dirName}/points.txt`, initMessage, (err) => {
+            if (err) {
+               console.log(err);
+            } else {
+               console.log(`Content Saved.`);
+               const foundDistance = findDistance(x1, y1, x2, y2);
+               const outputMessage = ` The distance between your two points: (${x1}, ${y1}), (${x2}, ${y2}) is ${foundDistance}.`;
+               fs.appendFile(`../${dirName}/points.txt`, outputMessage, (err) => {
+                  if (err) {
+                     console.log(err);
+                  }
+               })
+            }
+         })
+      }
+   })
+};
+
+processInput(userInput, dirName);
+
 /*
  * ProcessInputs:
  * 1. Takes the array from process.argv
- * 2. it creates a unqiue folder + file for every set of arguments
+ * 2. it creates a unique folder + file for every set of arguments
    initial folder = dataPoints
     every iteration after
       folder = temp_+[prior iteration folder name]
@@ -32,7 +66,6 @@ const { findDistance } = require('./mathHelpers');
  * Can be done synchronously
  */
 
-let userInput = process.argv;
 
 /*
  * Piece 2: Storage
@@ -51,10 +84,10 @@ let userInput = process.argv;
 /*
  * Piece 3: Processing and logging output
  * const foundDistance = findDistance(userInput)
- * const x1 = userInput[0]
- * const x2 = userInput[2]
- * const y1 = userInput[1]
- * const y2 = userInput[3]
+ * const x1 = userInput[2]
+ * const x2 = userInput[4]
+ * const y1 = userInput[3]
+ * const y2 = userInput[5]
  * const outputMessage = `The distance between your two points: ($x1, $y1), ($x2, $y2) is
     $foundDistance`
  * fs.appendFile('folder_name/points.txt', outputMessage, callback)
