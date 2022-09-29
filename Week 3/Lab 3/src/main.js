@@ -1,37 +1,38 @@
+/* eslint-disable no-console */
+/* eslint-disable no-shadow */
 const process = require('process');
 const fs = require('fs');
 const { findDistance } = require('./mathHelpers');
 
-let userInput = process.argv.slice(2);
+const userInput = process.argv.slice(2);
 const dirName = 'dataPoints';
 
 const processInput = (userInput, dirName) => {
-   fs.mkdir(`../${dirName}`, (err) => {
-      if (err && err.code === 'EEXIST') {
-         processInput(userInput, `TEMP_${dirName}`);
-         
-      } else {
-         const x1 = parseInt(userInput[0]);
-         const y1 = parseInt(userInput[1]);
-         const x2 = parseInt(userInput[2]);
-         const y2 = parseInt(userInput[3]);
-         const initMessage = `Your input co-ordinates are (${x1}, ${y1}), (${x2}, ${y2}).`;
-         fs.writeFile(`../${dirName}/points.txt`, initMessage, (err) => {
+  fs.mkdir(`../${dirName}`, (err) => {
+    if (err && err.code === 'EEXIST') {
+      processInput(userInput, `TEMP_${dirName}`);
+    } else {
+      const initMessage = `Your input co-ordinates are (${userInput[0]}, ${userInput[1]}), (${userInput[2]}, ${userInput[3]}).`;
+      fs.writeFile(`../${dirName}/points.txt`, initMessage, (err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('Content Saved.');
+          const x1 = parseInt(userInput[0], 10);
+          const y1 = parseInt(userInput[1], 10);
+          const x2 = parseInt(userInput[2], 10);
+          const y2 = parseInt(userInput[3], 10);
+          const foundDistance = findDistance(x1, y1, x2, y2);
+          const outputMessage = `The distance between your two points: (${userInput[0]}, ${userInput[1]}), (${userInput[2]}, ${userInput[3]}) is ${foundDistance}.`;
+          fs.appendFile(`../${dirName}/points.txt`, outputMessage, (err) => {
             if (err) {
-               console.log(err);
-            } else {
-               console.log(`Content Saved.`);
-               const foundDistance = findDistance(x1, y1, x2, y2);
-               const outputMessage = ` The distance between your two points: (${x1}, ${y1}), (${x2}, ${y2}) is ${foundDistance}.`;
-               fs.appendFile(`../${dirName}/points.txt`, outputMessage, (err) => {
-                  if (err) {
-                     console.log(err);
-                  }
-               })
+              console.log(err);
             }
-         })
-      }
-   })
+          });
+        }
+      });
+    }
+  });
 };
 
 processInput(userInput, dirName);
@@ -65,7 +66,6 @@ processInput(userInput, dirName);
  * This will be the argument we pass through processInputs
  * Can be done synchronously
  */
-
 
 /*
  * Piece 2: Storage
