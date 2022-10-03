@@ -71,7 +71,7 @@ processInput(userInput, dirName);
  * Piece 2: Storage
  * ~needs some work with structuring~
  * fs.existsSync to see if the folder already exists
- * folder system through fs.makedir() applied recursively
+ * folder system through fs.mkdir() applied recursively
  * fs.writefile() to store arguments in 'points.txt'
  * console.log('Content Saved')
  */
@@ -95,6 +95,6 @@ processInput(userInput, dirName);
 
 /*
  * Order of Dependencies
- * fs.makedir() needed to make a folder for fs.writefile to write in
+ * fs.mkdir() needed to make a folder for fs.writefile to write in
  * fs.writefile needed to make a file for fs.appendFile to append to
  */
