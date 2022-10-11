@@ -1,7 +1,9 @@
+const os = require( 'os' );
+
 // 1. undeclared variable that is logged
 
-let age;
-console.log(age);
+// let age;
+// console.log(age);
 
 // 2. Change price to taxed price func
 
@@ -199,27 +201,194 @@ calculateArea(1, `Hello`);
  *
  * 1. Function takes parameters of age and name and passes them through helper functions
  * 2. Function logs `Hello my name is ${name}. I am ${yourAge} years old.`
- * 3. Function should only accept a string for name, otherwise log `Try again with a real name this time.`
- * 4. Function should only accept a number or string for age, otherwise log `That isn't an age.`
- * 5. Function should not accept age values over 110, log `Are you sure you aren't dead?`
+ * 3. Function should only accept a number or string for age, otherwise log `That isn't an age.`
  * 
  * -Ask + Clarify-
  * 
- * Is there a way to discount data entry of numerical digits in a string?
- * Could use const name = name.replace(/\d+/g, '');
- * Moves forward without any numerical additions. Prints no name if all it got was numbers in a string.
+ * No clarifying questions
  * 
  * -Explain using data-
  * 
  * function(Moh, 25) -> `Hello my name is Moh. I am 26 years old.`
- * function(4378, 16) -> typeof 4378 !== string -> `Try again with a real name this time.`
- * function('Abby6', 19) -> Abby6.replace(/\d+/g, '') -> Abby -> `Hello... Abby...'
- * function(Charles, 115) -> 115 > 110 -> 'Are you sure you aren't dead?`
  * function(Guisseppe, 'twenty two') -> `Hello... I am twenty two years old.`
  * 
  * -Outline pseudocode-
  * 
- * 
+ * const printGreeting = (name, age) => {
+ *  const nameIntro = sayHello(name);
+ *  const ageIntro = age(age);
+ *  combinedInfo = `${nameIntro}.  ${ageIntro}` 
+ * }
  * 
  * -Refactor into code-
  */
+
+const howOld = (yourAge) => {
+    return `I am ${yourAge} years old.`;
+};
+
+const sayHello = (name) => {
+    return `Hello my name is ${name}`;
+};
+
+const printGreeting = (name, age) => {
+    const nameIntro = sayHello(name);
+    const ageIntro = howOld(age);
+    const combinedInfo = `${nameIntro}. ${ageIntro}`;
+    console.log(combinedInfo); 
+}
+
+printGreeting('Brett', 32);
+printGreeting('Tony', 105);
+
+/*
+* -Repeat question-
+*
+* 1. Function that intakes parameter listOfPeople
+* 2. Function equates finalMsg to an empty string
+* 3. Function uses for-of loop to iterate through objects in listOfPeople
+* 4. Function retrieves firstName and adds it to finalMsg string
+* 5. Function then inserts a newline 'os.EOL' and continues
+* 6. When loop is finished return finalMsg string + console.log **outside** function
+*
+* -Ask + Clarify-
+*
+* Where do we want the finalMsg "empty string" to be placed?
+* Global scope so that iteration recalls it but if the function is recalled it resets to empty
+*
+* -Explain using data-
+*
+* Iterates through the array index
+* At each object finds the key:value "firstName"
+* Inserts new line
+* Pulls the next "firstName" value
+* Inserts new line, so on and so forth.
+* Returns `firstName1 \n firstName2 \n firstName3`
+* Values are console logged to create our desired string 
+*
+* -Outline pseudocode-
+*
+* let finalMsg = ''
+*
+* const greetPeople = (listOfPeople) => {
+    for (people of listOfPeople) {
+        foundName = array[Index].objectKey;
+        finalMsg += foundName + os.EOL;
+    }
+    return finalMsg;
+}
+*
+* -Refactor into code-
+*/
+
+const peopleList = [
+    {
+        firstName: "John",
+        lastName: "Smith",
+        age: 40,
+        job: "Office manager",
+    },
+    {
+        firstName: "Sam",
+        lastName: "Doe",
+        age: 20,
+        job: "CFO",
+    },
+    {
+        firstName: "Sarah",
+        lastName: "Franklin",
+        age: 25,
+        job: "CEO",
+    }
+];
+
+
+const greetPeople = (listOfPeople) => {
+    let finalMsg = ''
+    for (person of listOfPeople) {
+        const foundName = person.firstName;
+        console.log (foundName);
+        finalMsg += foundName + os.EOL;
+    }
+    return finalMsg;
+};
+
+greetPeople(peopleList);
+
+/*
+* -Repeat question-
+*
+* Function that iterates through the array of days and months
+* If the month === October && day === 31 output "It is halloween!"
+* If the month === October && day !== 31 output "Almost halloween"
+* If the month !== October output "Not yet"
+*
+* -Ask + Clarify-
+*
+* No clarifying questions
+*
+* -Explain using data-
+*
+* iterate list -> "October" "1" -> "Almost halloween"
+* iterate list -> "October" "31" -> "It is halloween!"
+* iterate list -> "January" "31" -> "Not yet"
+*
+* -Outline pseudocode-
+*
+* const isItHalloween = (array) => {
+    for (date of daysInTheYear) {
+        if (date.month !== 'October') {
+            console.log('Not yet.');
+            return; 
+        }
+        if (date.month === 'October' && date.day === '31') {
+            console.log('It is halloween!');
+        }
+        if (date.month === 'October' && date.day !== '31') {
+            console.log('Almost halloween');
+        }
+    }
+};
+*
+* -Refactor into code-
+*/
+
+const daysInTheYear = [
+    { 
+        month: "October",
+        day: "1"
+    },
+    { 
+        month: "October",
+        day: "12"
+    }, 
+    { 
+        month: "October",
+        day: "31"
+    }, 
+    { 
+        month: "January",
+        day: "13"
+    }, 
+    { 
+        month: "December",
+        day: "1"
+    },
+];
+
+const isItHalloween = (array) => {
+    for (date of daysInTheYear) {
+        if (date.month !== 'October') {
+            console.log('Not yet.');
+            return; 
+        }
+        if (date.month === 'October' && date.day === '31') {
+            console.log('It is halloween!');
+        }
+        if (date.month === 'October' && date.day !== '31') {
+            console.log('Almost halloween');
+        }
+    }
+};
+
+isItHalloween(daysInTheYear);
