@@ -1,4 +1,4 @@
-var person = { name: 'Sarah', height: '6 feet', age: 22 };
+// var person = { name: 'Sarah', height: '6 feet', age: 22 };
 
 /*
  * Q12.1 - The keys are name, height and age
@@ -16,23 +16,23 @@ var person = { name: 'Sarah', height: '6 feet', age: 22 };
  * Q12.6 -
  */
 
-if (!("eyeColor" in person)) {
-    console.log(`Missing Key`);
-}
+// if (!("eyeColor" in person)) {
+//     console.log(`Missing Key`);
+// }
 
 /*
  * Q12.7 -
  */
 
-for (qualities in person) {
-    console.log(`${qualities}: ${person[`${qualities}`]}`);
-}
+// for (qualities in person) {
+//     console.log(`${qualities}: ${person[`${qualities}`]}`);
+// }
 
 /*
  * Q12.8 -
  */
 
-console.log(Object.keys(person));
+// console.log(Object.keys(person));
 
 /*
  * -Repeat question-
@@ -173,25 +173,25 @@ console.log(Object.keys(person));
  * -Refactor into code-
  */
 
-const readline = require( 'readline-sync' );
+// const readline = require( 'readline-sync' );
 
-const login = { username: `qubeqode`, password: `codedqubes`};
+// const login = { username: `qubeqode`, password: `codedqubes`};
 
-const inputUsername = readline.question(`What is your username? `);
+// const inputUsername = readline.question(`What is your username? `);
 
-const authenticatePassword = (object) => {
-    for (let attempts = 0; attempts < 3; attempts++) {
-        const inputPassword = readline.question(`Input password for ${inputUsername}: `);
-        if (inputPassword === object.password) {
-            console.log(`You may access your account.`);
-            return;
-        }
-    }
-    console.log(`You have tried too many times.`)
-    return;
-};
+// const authenticatePassword = (object) => {
+//     for (let attempts = 0; attempts < 3; attempts++) {
+//         const inputPassword = readline.question(`Input password for ${inputUsername}: `);
+//         if (inputPassword === object.password) {
+//             console.log(`You may access your account.`);
+//             return;
+//         }
+//     }
+//     console.log(`You have tried too many times.`)
+//     return;
+// };
 
-authenticatePassword(login);
+// authenticatePassword(login);
 
 /*
  * -Repeat question-
@@ -201,9 +201,22 @@ authenticatePassword(login);
  * 
  * How will we find every second word?
  * Will need to seperate words into unique data points/strings and act on every other seperated string
+ * array.Split(" ");
  * 
- * How will we capitalize words?
+ * How will we uppercase words?
  * .toUpperCase()
+ * 
+ * How will we iterate through?
+ * for(word of array)
+ * 
+ * How will we find the odd words?
+ * array[word] % 2 !== 0
+ * 
+ * How will we rejoin the words to form a sentence?
+ * array.join(' ')
+ * 
+ * How will we update the value for uppercased words?
+ * array[word] = array[word].toUpperCase()
  * 
  * -Explain using data-
  * 
@@ -212,7 +225,181 @@ authenticatePassword(login);
  * 2. computer iterates through the multiple strings focusing on odd index values
  * 3. for each odd index value the computer converts the string into uppercase
  * 4. the computer then concatenates the regular strings + uppercase strings in the same order as the initial input
- * -> 'fur PILLOWS are HARD to SLEEP on'
+ * -> 'furPILLOWSareHARDtoSLEEPon'
+ * 
+ * -Outline pseudocode-
+ * 
+ * inputArray = ['Some', 'data', 'here.']
+ * 
+ * const uppercaseOddWords = (array) => {
+ *  for (word of array) {
+ *      if (typeof word !== string) {
+ *          array[word] = word.toString();
+ *      }
+ *      const oddOrEvenIndicator = array[word] % 2;
+ *      if (oddOrEvenIndicator !== 0) {
+ *          array[word] = array[word].toUpperCase();
+ *      }
+ *  }
+ *  array.join(' ');
+ * }
+ * 
+ * -Refactor into code-
+ */
+
+// inputString = 'fur pillows are hard to actually sleep on'
+
+// const upperCamelCaseString = (string) => {
+//     const convertedArray = string.split(' ');
+//     for (word of convertedArray) {
+//         const wordIndex = convertedArray.indexOf(word);
+//         if ((wordIndex % 2) !== 0) {
+//             convertedArray[wordIndex] = word.toUpperCase();
+//         }
+//     }
+//     const outputString = convertedArray.join('');
+//     console.log(outputString);
+// };
+
+// upperCamelCaseString(inputString);
+
+/*
+ * -Repeat question-
+ * 
+ * 1. Function recieves an ARRAY of words and returns an OBJECT
+ *  - Key: Value - word: # times said
+ * 
+ * -Ask + Clarify-
+ * 
+ * How will we tally through the array without iterating more than once?
+ * 
+ * How will we add items to an object?
+ * object['key'] = value
+ * 
+ * 
+ * 
+ * -Explain using data-
+ * 
+ * "buy it use it break it fix it trash it change it mail upgrade it"
+ * computer sees buy, adds to tally for buy
+ * sees it adds to tally moves on
+ * use, it, break etc...
+ * computer generates an object with the key:value word:tally
+ * {buy: 1, it: 7...}
+ * 
+ * -Outline pseudocode-
+ * 
+ * inputString = 'buy it use it break it fix it trash it change it mail upgrade it'
+ * 
+ * const countWordRepetitions = (string) => {
+ *  
+ * }
+ * 
+ * -Refactor into code-
+ */
+
+// inputString = 'buy it use it break it fix it trash it change it mail upgrade it';
+
+// const countWords = (string) => {
+//     let outputObject = {};
+//     for (word of string.split(' ')) {
+//         if (word in outputObject) {
+//             let priorValue = outputObject[word];
+//             priorValue += 1;
+//             outputObject[word] = priorValue;
+//         } else {
+//             outputObject[word] = 1;
+//         }
+//     }
+//     console.log(outputObject);
+// };
+
+// countWords(inputString);
+
+/*
+ * -Repeat question-
+ * 
+ * Function accepts an array of words as an input
+ * Function returns an object
+ * Key: value -> word: [array of indices it appears]
+ * 
+ * 
+ * -Ask + Clarify-
+ * 
+ * 
+ * 
+ * -Explain using data-
+ * 
+ * const input = ["buy", "it", "fix", "it", "sell", "it"];
+ * Computer iterates through the words 1 by 1
+ * Sees "buy" -> creates an array and pushes index value of word as first item
+ * Sees "it" -> creates an array and pushes index value of word as first item
+ * Sees "fix" -> creates an array and pushes index value of word as first item
+ * Sees "it" -> adds the index value to the end of the pre-existing array for it
+ * .....
+ * output -> { buy: [0], it: [1, 3, 5], ....}
+ * 
+ * -Outline pseudocode-
+ * 
+ * const wordIndexes = (array) => {
+ *  outputObject = {}
+ *  for (word of array) {
+ *      if (word in outputObject) {
+ *          //add index to end of array for value matching key in object
+ *      } else {
+ *          //create new object key defined as array with index of value
+ *      }
+ *  }
+ * };
+ * 
+ * -Refactor into code-
+ */
+
+// const input = [
+//     "buy",
+//     "it",
+//     "use",
+//     "it",
+//     "break",
+//     "it",
+//     "fix",
+//     "it",
+//     "trash",
+//     "it",
+//     "change",
+//     "it",
+//     "mail",
+//     "upgrade",
+//     "it",
+//   ];
+  
+  
+// const wordPosition = (array) => {  
+//     let outputObject = {};
+//     for (let index = 0; index < array.length; index++) {
+//         if (array[index] in outputObject) {
+//             outputObject[array[index]].push(index);
+//         } else {
+//             outputObject[array[index]] = [index];
+//         }
+//     }
+//     console.log(outputObject);
+// };
+
+// wordPosition(input);
+
+/*
+ * -Repeat question-
+ * 
+ * 
+ * 
+ * -Ask + Clarify-
+ * 
+ * 
+ * 
+ * -Explain using data-
+ * 
+ * 
  * 
  * -Outline pseudocode-
  * 
