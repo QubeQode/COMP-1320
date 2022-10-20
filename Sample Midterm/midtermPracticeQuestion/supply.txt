@@ -16,4 +16,3 @@ medium-roast
 dark-roast
 dark-roast
 dark-roast
-blonde
