@@ -391,7 +391,8 @@
 /*
  * -Repeat question-
  * 
- * 
+ * Function accepts an array of artist objects
+ * Creates single object that organizes them by year
  * 
  * -Ask + Clarify-
  * 
@@ -399,13 +400,153 @@
  * 
  * -Explain using data-
  * 
+ * input -> [{song:..., name:..., year: 2017}, {song:..., name:..., year: 2018}, {song:..., name:..., year:2018}]
+ * computer creates empty object
+ * computer iterates through the array of objects
+ * For each item in array it checks for value associated to key year
+ * on year 2017 it creates a key 2017 in the empty object
+ * It then creates an array that houses the object w the year 2017
+ * On year 2018 creates a key 2018 in the output object
+ * It then creates an array that houses the object w the year 2018
+ * On second 2018 pushes object onto end of array associated with 2018 key
+ * output -> {
+ *  2017: {
+ *      song: ...
+ *      name: ...
+ *      year: 2017
+ *  }
+ *  2018: {
+ *      song: ...
+ *      name: ...
+ *      year: 2018
+ *  },
+ *  {
+ *      song: ...
+ *      name: ...
+ *      year: 2018
+ *  },
+ * };
  * 
  * 
  * -Outline pseudocode-
- * 
- * 
- * 
- * -Refactor into code-
- * 
- * 
  */
+
+// const songsByYear = (array) => {
+    // let outputObject = {}
+    // for (let song of array) {
+        //let yearOfRelease = song.year
+        //if (object.yearOfRelease in outputObject) {
+            // object[yearOfRelease].push(song);
+        //}
+        //object[yearOfRelease] = song;
+// };
+
+ /* 
+  * -Refactor into code-
+  */
+
+const artists = [
+    {
+      song: "HOLIDAY",
+      name: "Lil Nas X",
+      year: 2020
+    },
+    {
+      song: "Say So",
+      name: "Doja Cat",
+      year: 2020
+    },
+    { 
+      song: "Old Town Road",
+      name: "Lil Nas X",
+      year: 2019
+    },
+    {
+      song: "Bad Guy",
+      name: "Billie Eilish",
+      year: 2019
+    },
+    {
+      song: "God's Plan",
+      name: "Drake",
+      year: 2018
+    }
+];
+
+const songsByYear = (array) => {
+    let outputObject = {}
+    for (let song of array) {
+        let yearOfRelease = song.year;
+        if (yearOfRelease in outputObject) {
+            outputObject[yearOfRelease].push(song);
+        } else {
+            outputObject[yearOfRelease] = [song];
+        }
+    }
+    console.log(outputObject);
+};
+
+songsByYear(artists);
+
+// IN CLASS PRACTICE:
+
+/*
+* -Repeat question-
+*
+* Function intakes an object with key values of CountryName: array of cities
+* Function finds the longest name in every array
+* Function returns an object with key values countryName: longestName
+*
+* -Ask + Clarify-
+*
+* What different processes are occuring here?
+* - Iteration
+* - Find longest name
+* - Create new object
+*
+* -Explain using data-
+*
+* Function starts with key NA and iterates through the values in assc array
+* Function gets the length of Vanc and saves value to variable
+* FUnction compares vanc length to Anaheim length
+* Function retains vanc value as Anaheim is shorter
+* Continues this till end as Van is longest
+* Function creates object w key NA and STRING value "van"
+* Function moves to key Europe and iterates through array vals
+* Function gets length og Paris and saves value to variable
+* Function sees that London is a longer length so it redefines var
+* Function creates object w key Europe and STRING balue "London"
+*
+* Output:
+* {
+    'North America': "Vancouver"
+    'Europe': 'London'
+}
+*/
+
+const continents = {
+    'North America': ['Vancouver', 'Anaheim', 'Orlando', 'Burnaby'],
+    Europe: ['Paris', 'London'],
+    Asia: ['Tokyo', 'Seoul', 'Beijing'],
+};
+
+const findLongestString = (array) => {
+    let currentLongest = '';
+    for (let value of array) {
+        if (value.length > currentLongest.length) {
+            currentLongest = value;
+        }
+    }
+    return currentLongest;
+};
+
+const findLongestCityName = (object) => {
+    let outputObject = {};
+    for (let key in object) {
+        let longestCityName = findLongestString(object[key]);
+        outputObject[key] = longestCityName;
+    }
+    console.log(outputObject);
+}
+
+findLongestCityName(continents);
