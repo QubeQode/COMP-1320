@@ -8,11 +8,12 @@
  * 
  */
 
-const unzipper = require('unzipper'),
-  fs = require("fs"),
-  PNG = require('pngjs').PNG,
-  path = require('path');
-
+const { createReadStream, createWriteStream } = require('fs');
+const { readdir } = require('fs').promises;
+const { Extract } = require('unzipper');
+const { PNG } = require('pngjs');
+const { extname, join } = require("path");
+const decompress = require('decompress');
 
 /**
  * Description: decompress file from given pathIn, write to given pathOut 
@@ -21,8 +22,14 @@ const unzipper = require('unzipper'),
  * @param {string} pathOut 
  * @return {promise}
  */
-const unzip = (pathIn, pathOut) => {
 
+const unzip = (pathIn, pathOut) => {
+  return createReadStream(pathIn)
+    .pipe(
+      Extract({ path: pathOut })
+    )
+    .promise()
+    .then(() => console.log(`Extraction operation complete`))
 };
 
 /**
@@ -31,8 +38,37 @@ const unzip = (pathIn, pathOut) => {
  * @param {string} path 
  * @return {promise}
  */
-const readDir = dir => {
 
+// 
+// return new Promise((resolve, reject) => {
+//   readdir(dir, (err, data) => {
+//     if(err) {
+//       reject(err);
+//     } else {
+//       const arrayOfImgs = [];
+//       for (let file of data) {
+//         if (extname === '.png') {
+//           arrayOfImgs.push(join(dir, file));
+//         }
+//       }
+//     resolve(arrayOfImgs);
+//     }
+//   });
+// });
+
+const readDir = dir => {
+    return readdir(dir, 'utf-8')
+      .then((data) => {
+        const arrayOfImgs = [];
+        for (let file of data) {
+          console.log(file);
+          if (file.endsWith('.png')) {
+            arrayOfImgs.push(join(dir, file));
+          }
+        }
+        let displayedArray = console.log(arrayOfImgs);
+        return displayedArray;
+      })
 };
 
 /**
@@ -44,6 +80,7 @@ const readDir = dir => {
  * @return {promise}
  */
 const grayScale = (pathIn, pathOut) => {
+
 
 };
 
