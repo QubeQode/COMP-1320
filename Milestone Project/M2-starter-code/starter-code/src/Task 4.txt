@@ -1,0 +1,45 @@
+Real-time photo feed:
+- New images appear without a browser refresh
+- Right now we must refresh bc the browser and server aren't communicating
+    - http connection ends once request and response have been achieved
+    - browser must initiate request in order for server to respond
+- We must find a way for the server to communicate w the browser without browser initiating
+
+
+Long-Polling: NOT RECOMMENDED
+- 90s to early 2000s
+
+setInterval(() => {
+    //some function
+}, 2000)
+
+- Trigger a get request w/ function to /feed so it updates every 2 seconds
+- Problem is it is very inefficient
+- Also every get request will refresh the page
+    - User's browser will refresh every 2 seconds
+
+
+AJAX: ALSO NOT RECOMMENDED 
+    - Allows you to send request to server and recieving response with no refresh
+    - fetch() in Js is a function that lets you do this
+    - This solves the refresh but not the process occurring every 2 seconds
+
+
+Websocket: RECOMMENDED OPTION
+- Smarter version of http
+- Browser and server form a permanent connection
+- Whenever server wants it can just send data through connection
+- No page refresh
+
+How to Approach Websocket:
+- Look at NPM websocket library
+    - Powerful
+    - Very complex
+- Look at NPM ws library
+    - Positives: easier to work with
+- Look at socket.IO
+    - Easiest solution
+    - Start with this and then move to ws or websocket
+
+Server will send just the image via websocket. Need to dynamically create img tag using js in our
+html page.

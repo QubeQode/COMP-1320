@@ -2,9 +2,28 @@ const { parse } = require("url");
 const { DEFAULT_HEADER } = require("./util/util.js");
 const controller = require("./controller");
 const { createReadStream } = require("fs");
+
 const path = require("path");
 
 const allRoutes = {
+  // John's pfp
+  '/john123/profile.jpeg:get': (request, response) => {
+    const imgLink = path.join('photos', request.url);
+    createReadStream(imgLink).pipe(response)
+  },
+  // Sandra's pfp
+  '/sandra123/profile.jpeg:get': (request, response) => {
+    const imgLink = path.join('photos', request.url);
+    createReadStream(imgLink).pipe(response)
+  },
+  // GET: localhost:3000/
+  '/:get': (request, response) => {
+    controller.getHomePage(request, response);
+  },
+  // POST: localhost:3000/
+  '/api/upload:post': (request, response) => {
+    controller.uploadImages(request, response);
+  },
   // GET: localhost:3000/form
   "/form:get": (request, response) => {
     controller.getFormPage(request, response);
@@ -22,7 +41,6 @@ const allRoutes = {
   "/feed:get": (request, response) => {
     controller.getFeed(request, response);
   },
-
   // 404 routes
   default: (request, response) => {
     response.writeHead(404, DEFAULT_HEADER);
@@ -47,14 +65,13 @@ function handler(request, response) {
 
 function handlerError(response) {
   return (error) => {
-    console.log("Something bad has  happened**", error.stack);
+    console.log("Something bad has happened**", error.stack);
     response.writeHead(500, DEFAULT_HEADER);
     response.write(
       JSON.stringify({
         error: "internet server error!!",
       })
     );
-
     return response.end();
   };
 }
