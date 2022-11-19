@@ -1,21 +1,10 @@
+const path = require("path");
 const { parse } = require("url");
-const { DEFAULT_HEADER } = require("./util/util.js");
-const controller = require("./controller");
+const { DEFAULT_HEADER } = require(path.join(__dirname, '.', 'util', 'util'));
+const controller = require(path.join(__dirname, '.', 'controller'));
 const { createReadStream } = require("fs");
 
-const path = require("path");
-
 const allRoutes = {
-  // John's pfp
-  '/john123/profile.jpeg:get': (request, response) => {
-    const imgLink = path.join('photos', request.url);
-    createReadStream(imgLink).pipe(response)
-  },
-  // Sandra's pfp
-  '/sandra123/profile.jpeg:get': (request, response) => {
-    const imgLink = path.join('photos', request.url);
-    createReadStream(imgLink).pipe(response)
-  },
   // GET: localhost:3000/
   '/:get': (request, response) => {
     controller.getHomePage(request, response);
@@ -32,12 +21,8 @@ const allRoutes = {
   "/form:post": (request, response) => {
     controller.sendFormData(request, response);
   },
-  // POST: localhost:3000/images
-  "/images:post": (request, response) => {
-    controller.uploadImages(request, response);
-  },
   // GET: localhost:3000/feed
-  // Shows instagram profile for a given user
+  // Shows instagram feed for a given user
   "/feed:get": (request, response) => {
     controller.getFeed(request, response);
   },
