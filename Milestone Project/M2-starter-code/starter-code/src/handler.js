@@ -10,7 +10,7 @@ const allRoutes = {
     controller.getHomePage(request, response);
   },
   // POST: localhost:3000/
-  '/api/upload:post': (request, response) => {
+  '/upload:post': (request, response) => {
     controller.uploadImages(request, response);
   },
   // GET: localhost:3000/form

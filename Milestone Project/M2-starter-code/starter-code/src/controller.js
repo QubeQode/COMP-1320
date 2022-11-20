@@ -7,7 +7,7 @@ const url = require('url');
 const { EOL } = require('os');
 
 const { DEFAULT_HEADER } = require(path.join(__dirname, '.', 'util', 'util'));
-const loadPage = require(path.join(__dirname, '.', 'logic', 'loadpage'));
+const { loadPage } = require(path.join(__dirname, '.', 'logic', 'loadpage'));
 const uploadImage = require(path.join(__dirname, '.', 'logic', 'uploadImage'));
 
 
@@ -42,9 +42,6 @@ const controller = {
   },
   uploadImages: (request, response) => {
     uploadImage(request, response);
-    response.end(
-        // send homepage again so you end on the same screen
-    );
   },
 };
 
