@@ -7,13 +7,15 @@ const url = require('url');
 const { EOL } = require('os');
 
 const { DEFAULT_HEADER } = require(path.join(__dirname, '.', 'util', 'util'));
-const { loadPage } = require(path.join(__dirname, '.', 'logic', 'loadpage'));
+const { loadPage, loadEJS } = require(path.join(__dirname, '.', 'logic', 'loadpage'));
+const getUsernames = require(path.join(__dirname, '.', 'logic', 'findExistingUsernames'));
 const uploadImage = require(path.join(__dirname, '.', 'logic', 'uploadImage'));
 
 
 const controller = {
   getHomePage: (request, response) => {
-    loadPage(path.join(__dirname, '.', 'views', 'index.ejs'), response);
+    getUsernames()
+      .then(data => loadEJS(path.join(__dirname, '.', 'views', 'index.ejs'), { usernames: data }, response));
   },
   getFormPage: (request, response) => {
     return response.end(`
