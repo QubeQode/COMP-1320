@@ -11,7 +11,7 @@
 
 <body>
     <% usernames.forEach(username => { %>
-        <%- include(`${process.cwd()}/views/userForm.ejs`, { username: username }); %>
+        <%- include(`${process.cwd()}/views/templates/userForm.ejs`, { username: username }); %>
     <% }); %>
 </body>
 

@@ -9,12 +9,9 @@
 </head>
 <body>
     <% if (isSuccess) { %>
-        <h1>Upload Successful</h1>
-        <a href="/">Homepage</a>
-        <a href="/feed">Feed</a>
+        <%- include(`${process.cwd()}/views/templates/uploadSuccess.ejs`); %>
     <% } else { %>
-        <h1>Upload Unsuccessful</h1>
-        <a href="/">Please Try Again</a>
+        <%- include(`${process.cwd()}/views/templates/uploadFailure.ejs`); %>
     <% } %>
 </body>
 </html>

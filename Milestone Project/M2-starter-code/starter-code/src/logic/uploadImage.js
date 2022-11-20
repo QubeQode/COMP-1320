@@ -4,12 +4,8 @@ const formidable = require('formidable');
 const url = require('url');
 const { EOL } = require('os');
 const { loadEJS } = require(path.join(__dirname, '.', 'loadpage'));
-
-const extractUser = (request) => {
-    const URL = url.parse(request.url);
-    const sliceStart = (URL.query.indexOf('=')) + 1;
-    return URL.query.slice(sliceStart, (URL.query.length));
-};
+const { extractJSONObject } = require(path.join(__dirname, '.', 'manipulateDatabase'));
+const extractUser = require(path.join(__dirname, '.', 'extractUserQuery'));
 
 const sendErrorResponse = (err, response) => {
     response.writeHead(err.httpCode || 400, { 'Content-Type': 'text/plain' });
@@ -36,9 +32,8 @@ const makeCallback = (inputID, request, response) => (err, fields, files) => {
 const updateDatabase = (inputID, request, originalFileName) => {
     const filepath = path.join(__dirname, '..', '..', 'database', 'data.json');
 
-    readFile(filepath)
-        .then(data => {
-            const databaseObject = JSON.parse(data);
+    return extractJSONObject()
+        .then((databaseObject) => {
             for (let index in databaseObject) {
                 if (databaseObject[index].username === inputID) {
                     databaseObject[index].photos.push(originalFileName);

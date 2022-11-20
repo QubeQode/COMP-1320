@@ -8,7 +8,7 @@ const { EOL } = require('os');
 
 const { DEFAULT_HEADER } = require(path.join(__dirname, '.', 'util', 'util'));
 const { loadPage, loadEJS } = require(path.join(__dirname, '.', 'logic', 'loadpage'));
-const getUsernames = require(path.join(__dirname, '.', 'logic', 'findExistingUsernames'));
+const { getUsernames } = require(path.join(__dirname, '.', 'logic', 'manipulateDatabase'));
 const uploadImage = require(path.join(__dirname, '.', 'logic', 'uploadImage'));
 
 

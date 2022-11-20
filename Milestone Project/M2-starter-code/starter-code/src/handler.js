@@ -4,11 +4,22 @@ const { DEFAULT_HEADER } = require(path.join(__dirname, '.', 'util', 'util'));
 const controller = require(path.join(__dirname, '.', 'controller'));
 const { createReadStream } = require("fs");
 
-
 const allRoutes = {
   // GET: localhost:3000/
   '/:get': (request, response) => {
     controller.getHomePage(request, response);
+  },
+  '/john123/profile.jpeg:get': (request, response) => {
+    createReadStream(path.join(__dirname, '.', 'photos', 'john123', 'profile.jpeg'))
+      .pipe(
+        response
+      );
+  },
+  '/sandra123/profile.jpeg:get': (request, response) => {
+    createReadStream(path.join(__dirname, '.', 'photos', 'sandra123', 'profile.jpeg'))
+      .pipe(
+        response
+      );
   },
   // POST: localhost:3000/
   '/upload:post': (request, response) => {
