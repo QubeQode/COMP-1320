@@ -5,7 +5,7 @@ const qs = require("querystring");
 const getFilepathTemplate = (logicElement) => path.join(__dirname, 'logic', logicElement);
 
 const { loadEJS } = require(getFilepathTemplate('loadPage'));
-const { getUsernames, getFeedObject } = require(getFilepathTemplate('manipulateDatabase'));
+const { getUsernames, getFeedObject, getImgsAray } = require(getFilepathTemplate('manipulateDatabase'));
 const uploadImage = require(getFilepathTemplate('uploadImage'));
 const { getPfpPaths, getFeedImgs } = require(getFilepathTemplate('returnImgs'));
 
@@ -47,7 +47,10 @@ const controller = {
       });
   },
   getFeedImgs: (request, response) => {
-    getFeedImgs(request, response);
+    getImgsArray(request)
+      .then(imgsArray => {
+        getFeedImgs(imgsArray, request, response)
+      })
   },
   uploadImages: (request, response) => {
     uploadImage(request, response);

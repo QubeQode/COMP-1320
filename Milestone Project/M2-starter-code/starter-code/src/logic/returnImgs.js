@@ -1,26 +1,30 @@
 const { createReadStream } = require('fs');
 const { readFile } = require('fs').promises;
 const path = require('path');
-const { getFeedObject } = require('./manipulateDatabase');
-const extractUser = require(path.join(__dirname, 'extractUserQuery'));
+const extractQueryParams = require(path.join(__dirname, 'extractUserQuery'));
 
 getPfpPaths = (request, response) => {
-    const inputID = extractUser(request);
+    const inputID = extractQueryParams(request).username;
           createReadStream(path.join(__dirname, '..', 'photos', inputID, 'profile.jpeg'))
             .pipe(
             response
             );
 };
 
-getFeedImgs = (request, response) => {
-  getFeedObject(request)
-    .then(userObject => {
-      userObject.photos.forEach(photo => {
-        readFile(path.join(__dirname, '..', 'photos', userObject.username, photo))
-          .then((data) => response.end(data)
-          );
-      });
-    })
+getFeedImgs = (imgsArray, request, response) => {
+  const { photo, username } = extractQueryParams(request);
+  imgsArray.forEach(img => {
+    if (img === photo) {
+      createReadStream(path.join(__dirname, '..', 'photos', username, img))
+      .pipe(
+        response
+      );
+    }
+  })
+  // return readFile(path.join(__dirname, '..', 'photos', userObject.username, photo))
+  //   .then(data => {
+  //     response.end(data);
+  //   })
 };
 
 module.exports = { getPfpPaths, getFeedImgs };

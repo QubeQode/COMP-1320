@@ -3,7 +3,7 @@ const path = require('path');
 
 const { EOL } = require('os');
 
-const extractUser = require(path.join(__dirname, 'extractUserQuery'));
+const extractQueryParams = require(path.join(__dirname, 'extractUserQuery'));
 
 extractJSONObject = () => {
     return readFile(path.join(__dirname, '..', '..', 'database', 'data.json'))
@@ -27,15 +27,29 @@ getUsernames = () => {
 
 getFeedObject = (request) => {
     return extractJSONObject()
-        .then((databaseObject) => { 
-            const inputID = extractUser(request);
+        .then(databaseObject => {
+            let inputID = extractQueryParams(request).username;
             let userObject;
             databaseObject.forEach(value => {
                 if (value.username === inputID) {
                     userObject = value;
                 }
-            });
+            })
             return userObject;
+        });
+};
+
+getImgsArray = (request) => {
+    return extractJSONObject()
+        .then(databaseObject => {
+            let inputID = extractQueryParams(request).username;
+            let imgsArray;
+            databaseObject.forEach(value => {
+                if(value.username === inputID) {
+                    imgsArray = value.photos;
+                }
+            })
+            return imgsArray
         })
 };
 
@@ -43,7 +57,7 @@ const updateDatabase = (inputID, request, originalFileName) => {
     const filepath = path.join(__dirname, '..', '..', 'database', 'data.json');
 
     return extractJSONObject()
-        .then((databaseObject) => {
+        .then(databaseObject => {
             for (let index in databaseObject) {
                 if (databaseObject[index].username === inputID) {
                     databaseObject[index].photos.push(originalFileName);
@@ -56,4 +70,4 @@ const updateDatabase = (inputID, request, originalFileName) => {
         });
 };
 
-module.exports = { getUsernames, getFeedObject, updateDatabase };
+module.exports = { getUsernames, getFeedObject, updateDatabase, getImgsArray };

@@ -6,7 +6,7 @@ const getFilepathTemplate = (logicElement) => path.join(__dirname, '.', logicEle
 
 const { loadEJS } = require(getFilepathTemplate('loadPage'));
 const { updateDatabase } = require(getFilepathTemplate('manipulateDatabase'));
-const extractUser = require(getFilepathTemplate('extractUserQuery'));
+const { extractUser } = require(getFilepathTemplate('extractUserQuery'));
 
 const sendErrorResponse = (err, response) => {
     response.writeHead(err.httpCode || 400, { 'Content-Type': 'text/plain' });

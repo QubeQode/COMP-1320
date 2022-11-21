@@ -1,9 +1,5 @@
 const url = require('url');
 
-const extractUser = (request) => {
-    const URL = url.parse(request.url);
-    const sliceStart = (URL.query.indexOf('=')) + 1;
-    return URL.query.slice(sliceStart, (URL.query.length));
-};
+const extractQueryParams = (request) => url.parse(request.url, true).query;
 
-module.exports = extractUser;
+module.exports = extractQueryParams;
