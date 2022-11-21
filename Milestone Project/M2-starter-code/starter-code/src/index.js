@@ -1,6 +1,6 @@
 const path = require("path");
 const http = require("http");
-const handler = require(path.join(__dirname, '.', 'handler'));
+const handler = require(path.join(__dirname, 'handler'));
 
 const PORT = process.env.PORT || 3000;
 

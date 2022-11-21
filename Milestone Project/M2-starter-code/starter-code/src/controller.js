@@ -1,21 +1,22 @@
+const { userInfo } = require("os");
 const path = require("path");
-const fs = require("fs");
-const { readFile, rename, writeFile } = require('fs').promises;
 const qs = require("querystring");
-const formidable = require('formidable');
-const url = require('url');
-const { EOL } = require('os');
 
-const { DEFAULT_HEADER } = require(path.join(__dirname, '.', 'util', 'util'));
-const { loadPage, loadEJS } = require(path.join(__dirname, '.', 'logic', 'loadpage'));
-const { getUsernames } = require(path.join(__dirname, '.', 'logic', 'manipulateDatabase'));
-const uploadImage = require(path.join(__dirname, '.', 'logic', 'uploadImage'));
+const getFilepathTemplate = (logicElement) => path.join(__dirname, 'logic', logicElement);
+
+const { loadEJS } = require(getFilepathTemplate('loadPage'));
+const { getUsernames, getFeedObject } = require(getFilepathTemplate('manipulateDatabase'));
+const uploadImage = require(getFilepathTemplate('uploadImage'));
+const { getPfpPaths, getFeedImgs } = require(getFilepathTemplate('returnImgs'));
 
 
 const controller = {
   getHomePage: (request, response) => {
     getUsernames()
-      .then(data => loadEJS(path.join(__dirname, '.', 'views', 'index.ejs'), { usernames: data }, response));
+      .then(data => loadEJS(path.join(__dirname, 'views', 'index.ejs'), { usernames: data }, response));
+  },
+  getPfp: (request, response) => {
+        getPfpPaths(request, response);
   },
   getFormPage: (request, response) => {
     return response.end(`
@@ -40,7 +41,13 @@ const controller = {
     });
   },
   getFeed: (request, response) => {
-    loadPage(path.join(__dirname, '.', 'views', 'feed.ejs'), response);
+    getFeedObject(request)
+      .then(userObject => {
+        loadEJS(path.join(__dirname, 'views', 'feed.ejs'), userObject, response)
+      });
+  },
+  getFeedImgs: (request, response) => {
+    getFeedImgs(request, response);
   },
   uploadImages: (request, response) => {
     uploadImage(request, response);

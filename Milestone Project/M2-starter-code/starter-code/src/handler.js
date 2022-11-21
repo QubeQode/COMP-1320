@@ -1,7 +1,7 @@
 const path = require("path");
 const { parse } = require("url");
-const { DEFAULT_HEADER } = require(path.join(__dirname, '.', 'util', 'util'));
-const controller = require(path.join(__dirname, '.', 'controller'));
+const { DEFAULT_HEADER } = require(path.join(__dirname, 'util', 'util'));
+const controller = require(path.join(__dirname, 'controller'));
 const { createReadStream } = require("fs");
 
 const allRoutes = {
@@ -9,17 +9,9 @@ const allRoutes = {
   '/:get': (request, response) => {
     controller.getHomePage(request, response);
   },
-  '/john123/profile.jpeg:get': (request, response) => {
-    createReadStream(path.join(__dirname, '.', 'photos', 'john123', 'profile.jpeg'))
-      .pipe(
-        response
-      );
-  },
-  '/sandra123/profile.jpeg:get': (request, response) => {
-    createReadStream(path.join(__dirname, '.', 'photos', 'sandra123', 'profile.jpeg'))
-      .pipe(
-        response
-      );
+  // GET: localhost:3000/userPfp
+  '/userPfp:get': (request, response) => {
+    controller.getPfp(request, response);
   },
   // POST: localhost:3000/
   '/upload:post': (request, response) => {
@@ -34,9 +26,12 @@ const allRoutes = {
     controller.sendFormData(request, response);
   },
   // GET: localhost:3000/feed
-  // Shows instagram feed for a given user
   "/feed:get": (request, response) => {
     controller.getFeed(request, response);
+  },
+  // GET: localhost:3000/feed/galleryImage
+  "/galleryImage:get": (request, response) => {
+    controller.getFeedImgs(request, response);
   },
   // 404 routes
   default: (request, response) => {

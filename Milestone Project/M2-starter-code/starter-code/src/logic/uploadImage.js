@@ -1,11 +1,12 @@
 const path = require('path');
-const { readFile, rename, writeFile } = require('fs').promises;
+const { rename } = require('fs').promises;
 const formidable = require('formidable');
-const url = require('url');
-const { EOL } = require('os');
-const { loadEJS } = require(path.join(__dirname, '.', 'loadpage'));
-const { extractJSONObject } = require(path.join(__dirname, '.', 'manipulateDatabase'));
-const extractUser = require(path.join(__dirname, '.', 'extractUserQuery'));
+
+const getFilepathTemplate = (logicElement) => path.join(__dirname, '.', logicElement);
+
+const { loadEJS } = require(getFilepathTemplate('loadPage'));
+const { updateDatabase } = require(getFilepathTemplate('manipulateDatabase'));
+const extractUser = require(getFilepathTemplate('extractUserQuery'));
 
 const sendErrorResponse = (err, response) => {
     response.writeHead(err.httpCode || 400, { 'Content-Type': 'text/plain' });
@@ -27,23 +28,6 @@ const makeCallback = (inputID, request, response) => (err, fields, files) => {
         .then(() => updateDatabase(inputID, request, originalFilename))
         .then(() => loadEJS(path.join(__dirname, '..', 'views', 'upload.ejs'), { isSuccess: true }, response))
         .catch(err => sendErrorResponse(err, response));
-};
-
-const updateDatabase = (inputID, request, originalFileName) => {
-    const filepath = path.join(__dirname, '..', '..', 'database', 'data.json');
-
-    return extractJSONObject()
-        .then((databaseObject) => {
-            for (let index in databaseObject) {
-                if (databaseObject[index].username === inputID) {
-                    databaseObject[index].photos.push(originalFileName);
-                    databaseObject[index].stats.posts = databaseObject[index].photos.length;
-                    const writableObject = (JSON.stringify(databaseObject)).replaceAll(',', `,${EOL}`);
-                    writeFile(filepath, writableObject);
-                    break;
-                }
-            }
-        });
 };
 
 const uploadImage = (request, response) => {

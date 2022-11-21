@@ -7,11 +7,6 @@ Functions:
 
 Pages/Templates:
 
-index.ejs:
-    - getUsernames used so that the content template block is produced per user
-    - getPfpPaths used so that the pfp is retrieved per user
-        - Pfps must be posted via server, so handler needs to iteratively create post path p/ pfp
-
 feed.ejs:
     - getFeedArray used to populate variable info in header template
     - getUploadedPhotos used to iterate through the user's uploaded photos in gallery template
