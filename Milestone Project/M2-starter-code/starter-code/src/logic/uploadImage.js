@@ -6,7 +6,7 @@ const getFilepathTemplate = (logicElement) => path.join(__dirname, '.', logicEle
 
 const { loadEJS } = require(getFilepathTemplate('loadPage'));
 const { updateDatabase } = require(getFilepathTemplate('manipulateDatabase'));
-const { extractUser } = require(getFilepathTemplate('extractUserQuery'));
+const extractQueryParams = require(getFilepathTemplate('extractUserQuery'));
 
 const sendErrorResponse = (err, response) => {
     response.writeHead(err.httpCode || 400, { 'Content-Type': 'text/plain' });
@@ -31,8 +31,8 @@ const makeCallback = (inputID, request, response) => (err, fields, files) => {
 };
 
 const uploadImage = (request, response) => {
-    const inputID = extractUser(request);
-    const form = formidable({ multiples: true, uploadDir: path.join('photos', inputID), keepExtensions: true });
+    const inputID = extractQueryParams(request).username;
+    const form = formidable({ multiples: true, uploadDir: path.join('src', 'photos', inputID), keepExtensions: true });
     form.parse(request, makeCallback(inputID, request, response));
 };
 
