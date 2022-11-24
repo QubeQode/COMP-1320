@@ -377,5 +377,14 @@
     <main>
         <%- include(`${process.cwd()}/src/views/templates/feedGallery.ejs`, { username, photos }); %>
     </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+
+        socket.on('newImage', (serverFilePath) => {
+            alert('test');
+        });
+    </script>
 </body>
 </html>

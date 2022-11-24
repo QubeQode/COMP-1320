@@ -23,8 +23,9 @@ const makeCallback = (inputID, request, response) => (err, fields, files) => {
         return;
     }
     const { newFilename, originalFilename }  = files[inputID];
+    const serverFilePath = path.join(__dirname, '..', 'photos', inputID, originalFilename);
 
-    rename(path.join(__dirname, '..', 'photos', inputID, newFilename), path.join(__dirname, '..', 'photos', inputID, originalFilename))
+    rename(path.join(__dirname, '..', 'photos', inputID, newFilename), serverFilePath)
         .then(() => updateDatabase(inputID, request, originalFilename))
         .then(() => loadEJS(path.join(__dirname, '..', 'views', 'upload.ejs'), { isSuccess: true }, response))
         .catch(err => sendErrorResponse(err, response));

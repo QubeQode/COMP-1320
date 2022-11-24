@@ -13,6 +13,19 @@
     <% usernames.forEach(username => { %>
         <%- include(`${process.cwd()}/src/views/templates/userForm.ejs`, { username: username }); %>
     <% }); %>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+
+        var form = document.getElementById('form');
+        var input = document.getElementById('input');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            socket.emit('newImage', e.currentTarget[0].name)
+        })
+    </script>
 </body>
 
 </html>

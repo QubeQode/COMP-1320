@@ -1,4 +1,3 @@
-const { userInfo } = require("os");
 const path = require("path");
 const qs = require("querystring");
 
@@ -18,28 +17,28 @@ const controller = {
   getPfp: (request, response) => {
         getPfpPaths(request, response);
   },
-  getFormPage: (request, response) => {
-    return response.end(`
-    <h1>Hello world</h1> <style> h1 {color:red;}</style>
-    <form action="/form" method="post">
-    <input type="text" name="username"><br>
-    <input type="text" name="password"><br>
-    <input type="submit" value="Upload">
-    </form>
-    `);
-  },
-  sendFormData: (request, response) => {
-    var body = "";
+  // getFormPage: (request, response) => {
+  //   return response.end(`
+  //   <h1>Hello world</h1> <style> h1 {color:red;}</style>
+  //   <form action="/form" method="post">
+  //   <input type="text" name="username"><br>
+  //   <input type="text" name="password"><br>
+  //   <input type="submit" value="Upload">
+  //   </form>
+  //   `);
+  // },
+  // sendFormData: (request, response) => {
+  //   var body = "";
 
-    request.on("data", function (data) {
-      body += data;
-    });
+  //   request.on("data", function (data) {
+  //     body += data;
+  //   });
 
-    request.on("end", function () {
-      var post = qs.parse(body);
-      console.log(post);
-    });
-  },
+  //   request.on("end", function () {
+  //     var post = qs.parse(body);
+  //     console.log(post);
+  //   });
+  // },
   getFeed: (request, response) => {
     getFeedObject(request)
       .then(userObject => {
