@@ -5,7 +5,7 @@ const { EOL } = require('os');
 
 const extractQueryParams = require(path.join(__dirname, 'extractUserQuery'));
 
-extractJSONObject = () => {
+readDatabase = () => {
     return readFile(path.join(__dirname, '..', '..', 'database', 'data.json'))
         .then(data => {
             const databaseObject = JSON.parse(data);
@@ -13,8 +13,16 @@ extractJSONObject = () => {
         });
 };
 
+const extractUser = (inputID, databaseObject) => {
+    for (let index in databaseObject) {
+        if (databaseObject[index].username === inputID) {
+            return index;
+        }
+    }
+};
+
 getUsernames = () => {
-    return extractJSONObject()
+    return readDatabase()
         .then(databaseObject => {
             const existingUsernames = [];
             for (let index in databaseObject) {
@@ -26,7 +34,7 @@ getUsernames = () => {
 };
 
 getFeedObject = (request) => {
-    return extractJSONObject()
+    return readDatabase()
         .then(databaseObject => {
             let inputID = extractQueryParams(request).username;
             let userObject;
@@ -40,7 +48,7 @@ getFeedObject = (request) => {
 };
 
 getImgsArray = (request) => {
-    return extractJSONObject()
+    return readDatabase()
         .then(databaseObject => {
             let inputID = extractQueryParams(request).username;
             let imgsArray;
@@ -56,18 +64,23 @@ getImgsArray = (request) => {
 const updateDatabase = (inputID, request, originalFileName) => {
     const filepath = path.join(__dirname, '..', '..', 'database', 'data.json');
 
-    return extractJSONObject()
+    return readDatabase()
         .then(databaseObject => {
-            for (let index in databaseObject) {
-                if (databaseObject[index].username === inputID) {
-                    databaseObject[index].photos.push(originalFileName);
-                    databaseObject[index].stats.posts = databaseObject[index].photos.length;
-                    const writableObject = (JSON.stringify(databaseObject)).replaceAll(',', `,${EOL}`);
-                    writeFile(filepath, writableObject);
-                    break;
-                }
-            }
-        });
+            const userIndex = extractUser(inputID, databaseObject);
+            databaseObject[userIndex].photos.push(originalFileName);
+            databaseObject[userIndex].stats.posts = databaseObject[userIndex].photos.length;
+            const writableObject = (JSON.stringify(databaseObject)).replaceAll(',', `,${EOL}`);
+            writeFile(filepath, writableObject);
+        })
 };
 
-module.exports = { getUsernames, getFeedObject, updateDatabase, getImgsArray };
+const updateFeed = (inputID) => {
+    return readDatabase()
+        .then(databaseObject => {
+            const userImgLibrary = databaseObject[extractUser(inputID, databaseObject)].photos;
+            const newImage = userImgLibrary[userImgLibrary.length - 1];
+            console.log(path.join(__dirname, '..', 'photos', inputID, newImage));
+        })
+}
+
+module.exports = { getUsernames, getFeedObject, updateDatabase, getImgsArray, updateFeed };

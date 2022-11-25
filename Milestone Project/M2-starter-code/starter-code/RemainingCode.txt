@@ -1,0 +1,13 @@
+As of now updateFeed runs before updateDatabase and so retrieves the image before updateDatabase has
+a chance to add the new img to array. updateFeed needs to wait for updateDatabase to complete before
+running.
+
+Also updateFeed returns promise pending object so something about the return statement is not valid.
+
+Once updateFeed returns the filepath as intended:
+    - filepath is passed in as the src of the img
+    - img is appended as child of 'gallery-item'
+    - second div is made with class 'gallery-item-info'
+    - secon div is appended as child of 'gallery-item'
+
+After this the websocket functionality should be complete.

@@ -19,12 +19,12 @@
         var socket = io();
 
         var form = document.getElementById('form');
-        var input = document.getElementById('input');
+        // var input = document.getElementById('input');
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            socket.emit('newImage', e.currentTarget[0].name)
-        })
+        function submitForm(inputID) {
+            socket.emit('newImage', inputID);
+            form.submit();
+        };
     </script>
 </body>
 

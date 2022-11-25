@@ -381,9 +381,21 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
         var socket = io();
+        var gallery = document.getElementsByClassName('gallery');
 
-        socket.on('newImage', (serverFilePath) => {
-            alert('test');
+        socket.on('newImage', (imagePath) => {
+            function makeDiv(className) {
+                var classAttribute = document.createAttribute('class');
+                classAttribute.value = className;
+                var div = document.createElement('div');
+                div.setAttributeNode(classAttribute);
+            }
+
+            var galleryItem = makeDiv('gallery-item');
+            gallery.appendChild(galleryItem);
+
+            var img = document.createElement('img');
+            img.src = imagePath
         });
     </script>
 </body>

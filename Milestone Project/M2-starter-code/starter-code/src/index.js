@@ -1,6 +1,7 @@
 const path = require("path");
 const http = require("http");
 const handler = require(path.join(__dirname, 'handler'));
+const { updateFeed } = require(path.join(__dirname, 'logic', 'manipulateDatabase'))
 const server = http.createServer(handler);
 
 const { Server } = require('socket.io');
@@ -8,15 +9,17 @@ const { Server } = require('socket.io');
 const io = new Server(server);
 
 io.on('connection', (socket) => {
-    console.log(`New Client: ${socket.id}`);
+    console.log(`New Socket: ${socket.id}`);
     socket.on('disconnect', () => {
         console.log(`${socket.id} has disconnected.`)
     });
-    socket.on('newImage', (username) => {
-        console.log(username);
+    socket.on('newImage', (inputID) => {
+        console.log(`Image upload by ${socket.id}:${inputID}`);
+        var imagePath = updateFeed(inputID);
+        console.log(imagePath);
+        io.emit('newImage', inputID);
     });
 });
-
 
 const PORT = process.env.PORT || 3000;
 
