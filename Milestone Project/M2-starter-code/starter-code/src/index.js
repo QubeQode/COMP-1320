@@ -1,12 +1,11 @@
 const path = require("path");
 const http = require("http");
 const handler = require(path.join(__dirname, 'handler'));
-const { updateFeed } = require(path.join(__dirname, 'logic', 'manipulateDatabase'))
+const { updateFeed } = require(path.join(__dirname, 'logic', 'manipulateDatabase'));
+const getIoInstance = require(path.join(__dirname, 'io'));
+
 const server = http.createServer(handler);
-
-const { Server } = require('socket.io');
-
-const io = new Server(server);
+const io = getIoInstance(server);
 
 io.on('connection', (socket) => {
     console.log(`New Socket: ${socket.id}`);
