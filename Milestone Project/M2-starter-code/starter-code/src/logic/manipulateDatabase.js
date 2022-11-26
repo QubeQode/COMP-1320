@@ -79,7 +79,7 @@ const updateFeed = (inputID) => {
         .then(databaseObject => {
             const userImgLibrary = databaseObject[extractUser(inputID, databaseObject)].photos;
             const newImage = userImgLibrary[userImgLibrary.length - 1];
-            console.log(path.join(__dirname, '..', 'photos', inputID, newImage));
+            return (path.join(__dirname, '..', 'photos', inputID, newImage));
         })
 }
 

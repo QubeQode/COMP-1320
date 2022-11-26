@@ -16,6 +16,9 @@ const sendErrorResponse = (err, response) => {
 /**
  * Higher order factory function that returns callback.
  *   - Callback has access to factory parameters
+ * @param inputID Name of account assosciated with upload
+ * @param request Browser request information
+ * @param response http server response variable
  */
 const makeCallback = (inputID, request, response) => (err, fields, files) => {
     if (err) {
