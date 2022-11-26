@@ -17,16 +17,13 @@ const getInstance = (server = null) => {
 }
 
 /*
- * Notes on Singleton Objects:
+ * Notes:
  *
- * Singleton object acts as buffer between instance of socket server and other code. As a
- * private variable it exists outside of the scope of the http server instance and the feature 
- * logic.
- * 
- * However using exports I can still refer to its contents. This allows me to access socket.io's
- * functionality outside of the page initializing the http server, without creating a circular logic
- * error in the require statements.
+ * - Circular dependancy using initialized socket outside of index.js (source of init)
+ * - Need to reference the init socket server outside of index.js
+ * - Use singleton-like function to either init socket server or return initialized socket server
  * 
  */
 
 module.exports = getInstance;
+ 

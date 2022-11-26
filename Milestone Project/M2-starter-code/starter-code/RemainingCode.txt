@@ -1,13 +1,38 @@
-As of now updateFeed runs before updateDatabase and so retrieves the image before updateDatabase has
-a chance to add the new img to array. updateFeed needs to wait for updateDatabase to complete before
-running.
+With singleton-like function getInstance circumventing circular dependancy there is no need for
+socket on index.ejs
 
-Also updateFeed returns promise pending object so something about the return statement is not valid.
+uploadImage logic will use .then to call: 
 
-Once updateFeed returns the filepath as intended:
-    - filepath is passed in as the src of the img
-    - img is appended as child of 'gallery-item'
-    - second div is made with class 'gallery-item-info'
-    - secon div is appended as child of 'gallery-item'
+socket.on('newImage', (inputID) => {
+        console.log(`Image upload by ${socket.id}:${inputID}`);
+        var imagePath = updateFeed(inputID);
+        io.emit('newImage', imagePath);
+});
 
-After this the websocket functionality should be complete.
+after updateDatabase has completed. 
+
+updateFeed's returned value is passed into io.emit block
+
+
+
+feed.ejs will contain a socket that:
+
+- listens for the 'newImage' event emitted by server side logic
+
+- creates div class='gallery-item'
+- creates img with src= the imagePath variable being emitted [appendChild 'gallery-item']
+- creates div class='gallery-item-info' [appendChild 'gallery-item']
+
+- creates ul [appendChild 'gallery-item-info']
+
+- creates li class='gallery-item-likes' [appendChild 'ul']
+- creates span class='visually hidden' [appendChild 'gallery-item-likes']
+- creates span.innerHTML 'Likes:'
+- creates i class='fas fa-heart' aria-hidden='true' [appendChild 'gallery-item-likes']
+- creates li.innerHTML equal to likes value for username
+
+- creates li class='gallery-item-comments'
+- creates span class='visually hidden' [appendChild 'gallery-item-comments']
+- creates span.innerHTML 'Comments:'
+- creates i class='fas fa-comment' aria-hidden='true' [appendChild 'gallery-item-comments']
+- creates li.innerHTML equal to comments value for username
