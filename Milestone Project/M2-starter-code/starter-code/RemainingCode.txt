@@ -29,10 +29,10 @@ feed.ejs will contain a socket that:
 - creates span class='visually hidden' [appendChild 'gallery-item-likes']
 - creates span.innerHTML 'Likes:'
 - creates i class='fas fa-heart' aria-hidden='true' [appendChild 'gallery-item-likes']
-- creates li.innerHTML equal to likes value for username
+- creates li.innerHTML '56' [placeholder for some future logic]
 
-- creates li class='gallery-item-comments'
+- creates li class='gallery-item-comments' [appendChild 'ul']
 - creates span class='visually hidden' [appendChild 'gallery-item-comments']
 - creates span.innerHTML 'Comments:'
 - creates i class='fas fa-comment' aria-hidden='true' [appendChild 'gallery-item-comments']
-- creates li.innerHTML equal to comments value for username
+- creates li.innerHTML '2' [placeholder for some future logic]

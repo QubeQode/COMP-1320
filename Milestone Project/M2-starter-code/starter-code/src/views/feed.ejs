@@ -384,18 +384,55 @@
         var gallery = document.getElementsByClassName('gallery');
 
         socket.on('newImage', (imagePath) => {
-            function makeDiv(className) {
+            console.log('Feed Socket Active');
+            
+            function makeTag(elementName, className) {
                 var classAttribute = document.createAttribute('class');
                 classAttribute.value = className;
-                var div = document.createElement('div');
-                div.setAttributeNode(classAttribute);
-            }
+                var element = document.createElement(elementName);
+                element.setAttributeNode(classAttribute);
+            };
 
-            var galleryItem = makeDiv('gallery-item');
+            var galleryItem = makeTag('div', 'gallery-item');
             gallery.appendChild(galleryItem);
 
             var img = document.createElement('img');
             img.src = imagePath
+            galleryItem.appendChild(img);
+
+            var galleryItemInfo = makeTag('div', 'gallery-item-info');
+            galleryItem.appendChild(galleryItemInfo);
+
+            var ul = document.createElement('ul');
+            galleryItemInfo.appendChild(ul);
+
+            var galleryItemLikes = makeTag('li', 'gallery-item-likes');
+            ul.appendChild(galleryItemLikes);
+
+            var visuallyHidden = makeTag('span', 'visually-hidden');
+            galleryItemLikes.appendChild(visuallyHidden);
+            visuallyHidden.innerHTML = "Likes:"
+
+            var icon = makeTag('i', 'fas fa-heart');
+            var ariaHidden = document.createAttribute('aria-hidden');
+            ariaHidden.value = 'true';
+            icon.setAttributeNode(ariaHidden);
+            galleryItemLikes.appendChild(icon);
+
+            galleryItemLikes.innerHTML = '56';
+
+            var galleryItemComments = makeTag('li', 'gallery-item-comments');
+            ul.appendChild(galleryItemComments);
+
+            var visuallyHidden2 = makeTag('span', 'visually-hidden');
+            galleryItemLikes.appendChild(visuallyHidden2);
+            visuallyHidden2.innerHTML = "Comments:"
+
+            var icon2 = makeTag('i', 'fas fa-heart');
+            icon2.setAttributeNode(ariaHidden);
+            galleryItemLikes.appendChild(icon2);
+
+            galleryItemComments.innerHTML = '2';
         });
     </script>
 </body>

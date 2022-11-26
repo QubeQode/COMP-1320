@@ -2,11 +2,19 @@ const path = require('path');
 const { rename } = require('fs').promises;
 const formidable = require('formidable');
 
-const getFilepathTemplate = (logicElement) => path.join(__dirname, '.', logicElement);
+const getLogicTemplate = (logicElement) => path.join(__dirname, '.', logicElement);
 
-const { loadEJS } = require(getFilepathTemplate('loadPage'));
-const { updateDatabase } = require(getFilepathTemplate('manipulateDatabase'));
-const extractQueryParams = require(getFilepathTemplate('extractUserQuery'));
+const { loadEJS } = require(getLogicTemplate('loadPage'));
+const { updateDatabase, getNewImgFilepath } = require(getLogicTemplate('manipulateDatabase'));
+const extractQueryParams = require(getLogicTemplate('extractUserQuery'));
+const getInstance = require(path.join(__dirname, '..', 'io'));
+
+const io = getInstance();
+
+const sendSocketEvent = (inputID, originalFileName) => {
+    var imagePath = getNewImgFilepath(inputID, originalFileName);
+    io.emit('newImage', imagePath);
+};
 
 const sendErrorResponse = (err, response) => {
     response.writeHead(err.httpCode || 400, { 'Content-Type': 'text/plain' });
@@ -31,6 +39,7 @@ const makeCallback = (inputID, request, response) => (err, fields, files) => {
     rename(path.join(__dirname, '..', 'photos', inputID, newFilename), serverFilePath)
         .then(() => updateDatabase(inputID, request, originalFilename))
         .then(() => loadEJS(path.join(__dirname, '..', 'views', 'upload.ejs'), { isSuccess: true }, response))
+        .then(() => sendSocketEvent(inputID, originalFilename))
         .catch(err => sendErrorResponse(err, response));
 };
 

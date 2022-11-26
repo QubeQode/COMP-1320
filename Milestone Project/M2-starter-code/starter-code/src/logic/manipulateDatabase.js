@@ -74,13 +74,8 @@ const updateDatabase = (inputID, request, originalFileName) => {
         })
 };
 
-const updateFeed = (inputID) => {
-    return readDatabase()
-        .then(databaseObject => {
-            const userImgLibrary = databaseObject[extractUser(inputID, databaseObject)].photos;
-            const newImage = userImgLibrary[userImgLibrary.length - 1];
-            return (path.join(__dirname, '..', 'photos', inputID, newImage));
-        })
-}
+const getNewImgFilepath = (inputID, originalFileName) => 
+    path.join(__dirname, '..', 'photos', inputID, originalFileName);
 
-module.exports = { getUsernames, getFeedObject, updateDatabase, getImgsArray, updateFeed };
+
+module.exports = { getUsernames, getFeedObject, updateDatabase, getImgsArray, getNewImgFilepath };
