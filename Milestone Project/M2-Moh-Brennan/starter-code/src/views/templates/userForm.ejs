@@ -1,0 +1,8 @@
+<div class="content-box">
+    <img src="/userPfp?username=<%= username %>" width="100" height="100" alt="Your profile picture.">
+    <form id="form" action="/upload?username=<%= username %>" onsubmit="submitForm('<%= username %>');" enctype="multipart/form-data" method="post">
+        <input id="input" type="file" name="<%= username %>" name="multipleFiles" multiple="multiple" />
+        <input type="submit" value="Upload" />
+    </form>
+    <a href="/feed?username=<%= username %>"><%= username %></a>
+</div>

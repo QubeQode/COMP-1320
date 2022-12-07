@@ -1,0 +1,7 @@
+<div class="container">
+    <div class="gallery"> 
+        <% photos.forEach(photo => { %>
+            <%- include(`${process.cwd()}/src/views/templates/galleryItem.ejs`, { username, photo }); %>
+        <% }) %>
+    </div>
+</div>

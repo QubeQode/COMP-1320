@@ -1,0 +1,47 @@
+With singleton-like function getInstance circumvents circular dependancy. Socket is no longer 
+limited to being referenced in index.js
+
+uploadImage logic will use .then to call: 
+
+socket.on('newImage', (inputID) => {
+        var imagePath = updateFeed(inputID);
+        io.emit('newImage', imagePath);
+});
+
+after updateDatabase has completed. 
+
+updateFeed's returned value is passed into io.emit block and emitted to all clients
+
+feed.ejs will contain a socket that:
+
+- listens for the 'newImage' event emitted by server side logic
+
+- creates div class='gallery-item'
+- creates img with src= the imagePath variable being emitted [appendChild 'gallery-item']
+- creates div class='gallery-item-info' [appendChild 'gallery-item']
+
+- creates ul [appendChild 'gallery-item-info']
+
+- creates li class='gallery-item-likes' [appendChild 'ul']
+- creates span class='visually hidden' [appendChild 'gallery-item-likes']
+- creates span.innerHTML 'Likes:'
+- creates i class='fas fa-heart' aria-hidden='true' [appendChild 'gallery-item-likes']
+- creates li.innerHTML '56' [placeholder for some future logic]
+
+- creates li class='gallery-item-comments' [appendChild 'ul']
+- creates span class='visually hidden' [appendChild 'gallery-item-comments']
+- creates span.innerHTML 'Comments:'
+- creates i class='fas fa-comment' aria-hidden='true' [appendChild 'gallery-item-comments']
+- creates li.innerHTML '2' [placeholder for some future logic]
+
+----------------------------------------------------------------------------------------------------
+
+- Recreates the atomic css structure for a gallery-item
+- Updates user's feed in real time to display the image just uploaded by matching user, via 
+  appendChild js logic
+
+Stopping Point: Console logging within the script block in feed.ejs outputs nothing in the browser
+                console (or the IDE console either). My best guess is that the socket.on block isn't
+                being activated by the 'newImage' event. My working theory as to why this is the
+                case is that io.emit isn't actually emitting the 'newImage' event. However finding a
+                means to debug socket.io has been challenging.
